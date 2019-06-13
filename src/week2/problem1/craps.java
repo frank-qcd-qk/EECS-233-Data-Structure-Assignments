@@ -1,9 +1,6 @@
 package week2.problem1;
 import java.util.*;
 
-import week1.Group1_ex2;
-
-
 
 
 //In a readme file included in your project, write about the result you observe. (6/14) [25 points]
@@ -52,19 +49,16 @@ public class craps{
         switch(this.comeOutRoll_value){
             case 7:
             case 11:
-                System.out.println("[ComeOutRoll Result:] Value is " + firstRoll + ". Natural win.");
+                System.out.println("[ComeOutRoll Result:] Value is " + comeOutRoll_value + ". Natural win.");
                 return WIN;
-                break;
             case 2:
             case 3:
             case 12:
-                System.out.println("[ComeOutRoll Result:] Value is " + firstRoll + ". Craps. Lose.");
+                System.out.println("[ComeOutRoll Result:] Value is " + comeOutRoll_value + ". Craps. Lose.");
                 return LOSE;
-                break;       
             default:
-                System.out.println("[ComeOutRoll Result:] Value is " + firstRoll + ". Roll again.");
+                System.out.println("[ComeOutRoll Result:] Value is " + comeOutRoll_value + ". Roll again.");
                 return NEUTRAL;
-                break;
         }
     }
 
@@ -93,7 +87,6 @@ public class craps{
             System.out.println("[Roll Dice Debug] Rolled result is: "+ roll_result.toString());
             System.out.println("[Roll Dice Debug] Rolled sum value is: "+roll_result);
         }
-
         return roll_value;
     }
 
