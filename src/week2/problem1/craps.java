@@ -15,6 +15,8 @@ public class craps{
     private int comeOutRoll_result=-1; //This is used for 3 status!
     private int comeOutRoll_value = -1; //This is used for storing the last value of dice
 
+    private int secondRound_value = -1;
+    private int secondround_result = -1;
 
     private final static int WIN = 2;
     private final static int LOSE = 1;
@@ -52,18 +54,23 @@ public class craps{
         switch(this.comeOutRoll_value){
             case 7:
             case 11:
-                System.out.println("[ComeOutRoll Result:] Value is " + firstRoll + ". Natural win.");
+                System.out.println("[ComeOutRoll Result:] Value is " + this.comeOutRoll_value + ". Natural win.");
                 return WIN;
-                break;
             case 2:
             case 3:
             case 12:
-                System.out.println("[ComeOutRoll Result:] Value is " + firstRoll + ". Craps. Lose.");
-                return LOSE;
-                break;       
-            default:
-                System.out.println("[ComeOutRoll Result:] Value is " + firstRoll + ". Roll again.");
+                System.out.println("[ComeOutRoll Result:] Value is " + this.comeOutRoll_value + ". Craps. Lose.");
+                return LOSE;  
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 9:
+            case 10:
+                System.out.println("[ComeOutRoll Result:] Value is " + this.comeOutRoll_value + ". Roll again.");
                 return NEUTRAL;
+            default:
+                throw new ArrayIndexOutOfBoundsException();
                 break;
         }
     }
