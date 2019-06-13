@@ -35,8 +35,26 @@ public class craps{
     This method will help us start the come out roll.
     It should call the random number generator.
     */
-    public void comeOutRoll(){
-
+    public int comeOutRoll(){
+        int firstRoll = rollDice();
+        switch(firstRoll){
+            case 7:
+            case 11:
+                System.out.println("Value is " + firstRoll + ". Natural win.");
+                return WIN;
+                break;
+            case 2:
+            case 3:
+            case 12:
+                System.out.println("Value is " + firstRoll + ". Craps. Lose.");
+                return LOSE;
+                break;       
+            default:
+                System.out.println("Value is " + firstRoll + ". Roll again.");
+                return NEUTRAL;
+                comeOutRoll_result = firstRoll;
+                break;
+        }
     }
 
 
@@ -51,8 +69,7 @@ public class craps{
 
 
     private int comeOutRoll_det(){
-
-        
+        int secondRoll = rollDice();
     }
 
 
