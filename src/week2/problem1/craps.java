@@ -1,9 +1,6 @@
 package week2.problem1;
 import java.util.*;
 
-import week1.Group1_ex2;
-
-
 
 
 //In a readme file included in your project, write about the result you observe. (6/14) [25 points]
@@ -100,7 +97,6 @@ public class craps{
             System.out.println("[Roll Dice Debug] Rolled result is: "+ roll_result.toString());
             System.out.println("[Roll Dice Debug] Rolled sum value is: "+roll_result);
         }
-
         return roll_value;
     }
 
