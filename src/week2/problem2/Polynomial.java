@@ -4,6 +4,7 @@ public class Polynomial{
 
     private double coefficient;
     private double degree; 
+    private double variable;
 
     public Polynomial(tuple[] input){
         for (i=0; i < tuple.length(); i++){
