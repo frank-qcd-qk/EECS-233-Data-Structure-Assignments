@@ -1,10 +1,11 @@
 package week2.problem1;
 import java.util.*;
 
+import week1.Group1_ex2;
 
 
-//Using your week1.Groupn_Ex2 class for a pair of dice, simulate 100,000 pass-line bets and output how many result in a win, 
-//and how many result in a loss. 
+
+
 //In a readme file included in your project, write about the result you observe. (6/14) [25 points]
 
 
@@ -12,14 +13,14 @@ import java.util.*;
 public class craps{
 
     int comeOutRoll_result=-1;
-    
 
 
-    private final static WIN = 2;
-    private final static LOSE = 1;
-    private final static NEUTRAL = 0;
 
+    private final static int WIN = 2;
+    private final static int LOSE = 1;
+    private final static int NEUTRAL = 0;
 
+    private final static Boolean DEBUG = true;
 
 
     //! Construcor...
@@ -83,15 +84,26 @@ public class craps{
 
 
     //! Internal mechanisms:
+    //Using your week1.Groupn_Ex2 class for a pair of dice, simulate 100,000 pass-line bets and output how many result in a win, 
+    //and how many result in a loss. 
+    private int rollDice(){
+        int[] dice_2_6_faces = new int[] {1,2,3,4,5,6};
+        Group1_ex2 dice_2_6 = new Group1_ex2(6,dice_2_6_faces);
+        int[] roll_result = new int[2];
+        
+        try{
+        roll_result = dice_2_6.getRollResult();
+        int roll_value = roll_result[0]+roll_result[1];
+        }catch(ArrayIndexOutOfBoundsException ex){
+            System.out.println("[FATAL ERROR!] Roll result array out of bound error!");
+        }
 
-    private int[] rollDice(){
-        int[][] dice = new int[2][6];
-        //TODO: Finish setting up the dice faces.
+        if (DEBUG){
+            System.out.println("[Roll Dice Debug] Rolled result is: "+ roll_result.toString());
+            System.out.println("[Roll Dice Debug] Rolled sum value is: "+roll_result);
+        }
 
-        int[] rollResult = new int[2];
-        //TODO: Invoke the random Generator below and rolle the dice
-
-        return 
+        return roll_result;
     }
 
     private int randomGenerator(int limitation) {
