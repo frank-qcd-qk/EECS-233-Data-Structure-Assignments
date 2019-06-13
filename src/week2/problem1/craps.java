@@ -1,8 +1,6 @@
 package week2.problem1;
 import java.util.*;
 
-
-
 //In a readme file included in your project, write about the result you observe. (6/14) [25 points]
 
 
