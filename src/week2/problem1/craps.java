@@ -106,6 +106,7 @@ public class craps{
         int[] roll_result = new int[2];
         int roll_value = -1;
         try{
+            dice_2_6.roll();
             roll_result = dice_2_6.getRollResult();
             roll_value = roll_result[0]+roll_result[1];
         }catch(ArrayIndexOutOfBoundsException ex){

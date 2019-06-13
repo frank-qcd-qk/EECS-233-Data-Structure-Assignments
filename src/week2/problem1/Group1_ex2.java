@@ -97,6 +97,7 @@ public class Group1_ex2 {
 
   // !Roll result getter
   public int[] getRollResult() {
+    System.out.println("[Group1_ex2 DEBUG]: get rolle result is: "+rollResult.toString());
     return rollResult;
   }
 
