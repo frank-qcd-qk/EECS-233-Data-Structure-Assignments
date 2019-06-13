@@ -49,7 +49,12 @@ public class craps{
                 System.out.println("Value is " + firstRoll + ". Craps. Lose.");
                 return LOSE;
                 break;       
-            default:
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 9:
+            case 10:
                 System.out.println("Value is " + firstRoll + ". Roll again.");
                 return NEUTRAL;
                 comeOutRoll_result = firstRoll;
