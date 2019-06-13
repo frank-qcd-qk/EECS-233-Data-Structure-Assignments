@@ -89,8 +89,7 @@ public class craps{
 
 
     //! Internal mechanisms:
-    //Using your week1.Groupn_Ex2 class for a pair of dice, simulate 100,000 pass-line bets and output how many result in a win, 
-    //and how many result in a loss. 
+
     private int rollDice(){
         int[] dice_2_6_faces = new int[] {1,2,3,4,5,6};
         Group1_ex2 dice_2_6 = new Group1_ex2(6,dice_2_6_faces);
