@@ -1,10 +1,11 @@
 package week2.problem1;
 import java.util.*;
 
+import week1.Group1_ex2;
 
 
-//Using your week1.Groupn_Ex2 class for a pair of dice, simulate 100,000 pass-line bets and output how many result in a win, 
-//and how many result in a loss. 
+
+
 //In a readme file included in your project, write about the result you observe. (6/14) [25 points]
 
 
@@ -12,14 +13,14 @@ import java.util.*;
 public class craps{
 
     int comeOutRoll_result=-1;
-    
 
 
-    private final static WIN = 2;
-    private final static LOSE = 1;
-    private final static NEUTRAL = 0;
 
+    private final static int WIN = 2;
+    private final static int LOSE = 1;
+    private final static int NEUTRAL = 0;
 
+    private final static Boolean DEBUG = true;
 
 
     //! Construcor...
@@ -66,15 +67,11 @@ public class craps{
 
 
     //! Internal mechanisms:
-
-    private int[] rollDice(){
-        int[][] dice = new int[2][6];
-        //TODO: Finish setting up the dice faces.
-
-        int[] rollResult = new int[2];
-        //TODO: Invoke the random Generator below and rolle the dice
-
-        return 
+    //Using your week1.Groupn_Ex2 class for a pair of dice, simulate 100,000 pass-line bets and output how many result in a win, 
+    //and how many result in a loss. 
+    private int rollDice(){
+        int dice_2_6_faces = 
+        Group1_ex2 dice_2_6 = new Group1_ex2(6,{1,2,3,4,5,6});
     }
 
     private int randomGenerator(int limitation) {
