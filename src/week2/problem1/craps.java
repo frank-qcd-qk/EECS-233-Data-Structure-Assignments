@@ -70,8 +70,23 @@ public class craps{
     //Using your week1.Groupn_Ex2 class for a pair of dice, simulate 100,000 pass-line bets and output how many result in a win, 
     //and how many result in a loss. 
     private int rollDice(){
-        int dice_2_6_faces = 
-        Group1_ex2 dice_2_6 = new Group1_ex2(6,{1,2,3,4,5,6});
+        int[] dice_2_6_faces = new int[] {1,2,3,4,5,6};
+        Group1_ex2 dice_2_6 = new Group1_ex2(6,dice_2_6_faces);
+        int[] roll_result = new int[2];
+        
+        try{
+        roll_result = dice_2_6.getRollResult();
+        int roll_value = roll_result[0]+roll_result[1];
+        }catch(ArrayIndexOutOfBoundsException ex){
+            System.out.println("[FATAL ERROR!] Roll result array out of bound error!");
+        }
+
+        if (DEBUG){
+            System.out.println("[Roll Dice Debug] Rolled result is: "+ roll_result.toString());
+            System.out.println("[Roll Dice Debug] Rolled sum value is: "+roll_result);
+        }
+
+        return roll_result;
     }
 
     private int randomGenerator(int limitation) {
