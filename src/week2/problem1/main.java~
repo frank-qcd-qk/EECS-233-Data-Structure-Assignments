@@ -6,7 +6,7 @@ public class main {
     private final static int LOSE = 1;
     private final static int NEUTRAL = 0;
 
-    public static void main(String[] args) {
+    public static void test_once() {
         craps game_single = new craps();
         if (game_single.run() == WIN) {
             System.out.println("Win!");

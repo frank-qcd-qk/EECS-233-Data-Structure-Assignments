@@ -6,7 +6,7 @@ import java.util.*;
 //In a readme file included in your project, write about the result you observe. (6/14) [25 points]
 
 
-//The  basic  bet  made  by  the   in this game is the pass-line bet. 
+//The  basic  bet  made  by  the  “shooter” in this game is the pass-line bet. 
 public class craps{
 
     private int comeOutRoll_result=-1; //This is used for 3 status!
@@ -41,14 +41,13 @@ public class craps{
     }
 
 
-    //A  come-out  roll  of  2,  3,  or  12  is  called    or    out,  and  the  shooter  loses.  
-    //A  come-out  roll  of  7  or  11  is  a    and  the  shooter  wins.  
+    //A  come-out  roll  of  2,  3,  or  12  is  called  “craps”  or  “crapping  out,”  and  the  shooter  loses.  
+    //A  come-out  roll  of  7  or  11  is  a  “natural,”  and  the  shooter  wins.  
     //The  other possible numbers are the point numbers: 4, 5, 6, 8, 9, and 10. 
-    //If the shooter rolls one of  these  numbers  on  the  come-out  roll,  this  establishes  the    win,  
+    //If the shooter rolls one of  these  numbers  on  the  come-out  roll,  this  establishes  the  “point”—to  win,  
     
     public int comeOutRoll(){
         this.comeOutRoll_value = rollDice();
-        System.out.println(comeOutRoll_value);
         switch(this.comeOutRoll_value){
             case 7:
             case 11:
@@ -73,7 +72,7 @@ public class craps{
     }
 
     //the  point  number must be rolled again before a seven. 
-    //So in the case where a  is established 
+    //So in the case where a “point” is established 
     //the shooter rolls over and over until either the point is rolled (a win) or a seven is rolled (a loss). 
     private int secondRound(){
         secondRound_value = rollDice();
@@ -114,7 +113,7 @@ public class craps{
 
         if (DEBUG){
             System.out.println("[Roll Dice Debug] Rolled result is: "+ roll_result.toString());
-            System.out.println("[Roll Dice Debug] Rolled sum value is: "+roll_value);
+            System.out.println("[Roll Dice Debug] Rolled sum value is: "+roll_result);
         }
         return roll_value;
     }
