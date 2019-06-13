@@ -83,12 +83,12 @@ public class craps{
         }
         if(secondRound_value == comeOutRoll_value){
             secondround_result = WIN;
-            System.out.println("[SecondRound:] Roll = " + secondRound_value + ". Win.")
+            System.out.println("[SecondRound:] Roll = " + this.secondRound_value + ". Win.");
             return secondround_result;
         }
         else if(secondRound_value == 7){
             secondround_result = LOSE;
-            System.out.println("[SecondRound:] Roll = " + secondRound_value + ". Lose.")
+            System.out.println("[SecondRound:] Roll = " + this.secondRound_value + ". Lose.");
             return secondround_result;
         }
         else {
@@ -117,5 +117,10 @@ public class craps{
         }
         return roll_value;
     }
+
+
+
+
+
 
 }
