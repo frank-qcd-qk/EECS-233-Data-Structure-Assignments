@@ -75,7 +75,26 @@ public class craps{
     //So in the case where a “point” is established 
     //the shooter rolls over and over until either the point is rolled (a win) or a seven is rolled (a loss). 
     private int secondRound(){
-
+        secondRound_value = rollDice();
+        System.out.println(secondRound_value);
+        while(secondRound_value != comeOutRoll_value && secondRound_value != 7){
+            secondRound_value = rollDice();
+            System.out.println(secondRound_value);
+        }
+        if(secondRound_value == comeOutRoll_value){
+            secondround_result = WIN;
+            System.out.println("[SecondRound:] Roll = " + secondRound_value + ". Win.")
+            return secondround_result;
+        }
+        else if(secondRound_value == 7){
+            secondround_result = LOSE;
+            System.out.println("[SecondRound:] Roll = " + secondRound_value + ". Lose.")
+            return secondround_result;
+        }
+        else {
+            System.out.println("Error, illegal return value");
+            return secondround_result;
+        }
     }
 
     //! Internal mechanisms:
