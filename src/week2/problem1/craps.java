@@ -103,15 +103,10 @@ public class craps{
     private int rollDice(){
         int[] dice_2_6_faces = new int[] {1,2,3,4,5,6};
         Group1_ex2 dice_2_6 = new Group1_ex2(6,dice_2_6_faces);
-        int[] roll_result = new int[2];
-        int roll_value = -1;
-        try{
-            dice_2_6.roll();
-            roll_result = dice_2_6.getRollResult();
-            roll_value = roll_result[0]+roll_result[1];
-        }catch(ArrayIndexOutOfBoundsException ex){
-            System.out.println("[FATAL ERROR!] Roll result array out of bound error!");
-        }
+        dice_2_6.roll();
+        int[] roll_result = dice_2_6.getRollResult();
+        int roll_value = roll_result[0]+roll_result[1];
+
 
         if (DEBUG){
             System.out.println("[Roll Dice Debug] Rolled result is: "+ roll_result.toString());
