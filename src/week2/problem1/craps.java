@@ -68,7 +68,6 @@ public class craps{
                 return NEUTRAL;
             default:
                 throw new ArrayIndexOutOfBoundsException();
-                break;
         }
     }
 
