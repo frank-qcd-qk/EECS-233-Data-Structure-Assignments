@@ -154,6 +154,8 @@ public class Group1_ex2 {
     int[] inputArray2;
     int diceSidesT3 = -1;
     // ? Input Protection
+    inputArray1 = new int[] { 3, 5, 7, 9, 11, 15 };
+    inputArray2 = new int[] { 1, 2, 3, 4 };
     if (DEBUG) {
       diceSides = 6;
       inputArray1 = new int[] { 3, 5, 7, 9, 11, 15 };
