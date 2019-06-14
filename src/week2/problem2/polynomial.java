@@ -1,7 +1,16 @@
-public class polynomial {
+package week2.problem2;
 
-    public polynomial(tuple[] input) {
+public class Polynomial{
 
+    private double coefficient;
+    private double degree; 
+    private double variable;
+
+    public Polynomial(tuple[] input){
+        for (i=0; i < tuple.length(); i++){
+            this.coefficient = input[i].get_u();
+            this.degree = input[i].get_v();
+        }
     }
 
     @Override
@@ -14,6 +23,4 @@ public class polynomial {
         // TODO: You should do this by breaking up the [a,b] range into 1000 bins and
         // approximating the polynomial by a line in each bin
     }
-
 }
-//modifier
