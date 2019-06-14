@@ -1,25 +1,26 @@
 package week2.problem2;
 import java.util.Arrays;
 import week2.problem2.tuple;
-
+//mod
 public class polynomial{
 
     private static final Boolean DEBUG = true;
 
-    private double[] coefficient;
-    private double[] degree;
+    private static double[] coefficient;
+    private static double[] degree;
 
     public polynomial(tuple[] userTuple){
         
-        this.coefficient = new double[userTuple.length];
-        this.degree = new double[userTuple.length];
+        coefficient = new double[userTuple.length];
+        degree = new double[userTuple.length];
+
         if (coefficient.length != degree.length){
             throw new ArrayIndexOutOfBoundsException();
         }
 
         for (int i=0; i < userTuple.length; i++){
-            this.coefficient[i] = userTuple[i].get_u();
-            this.degree[i] = userTuple[i].get_v();
+            coefficient[i] = userTuple[i].get_u();
+            degree[i] = userTuple[i].get_v();
         }
 
         if (DEBUG){
@@ -85,17 +86,18 @@ public class polynomial{
 
 
     // Code refered to stackoverflow: https://stackoverflow.com/questions/8058768/superscript-in-java-string/8058953
+    /*
     private static String superscript(String str) {
         str = str.replaceAll("0", "⁰");
         str = str.replaceAll("1", "¹");
         str = str.replaceAll("2", "²");
         str = str.replaceAll("3", "³");
-        str = str.replaceAll("4", "⁴");
-        str = str.replaceAll("5", "⁵");
-        str = str.replaceAll("6", "⁶");
-        str = str.replaceAll("7", "⁷");
-        str = str.replaceAll("8", "⁸");
-        str = str.replaceAll("9", "⁹"); 
+        str = str.replaceAll("4", "�?�");
+        str = str.replaceAll("5", "�?�");
+        str = str.replaceAll("6", "�?�");
+        str = str.replaceAll("7", "�?�");
+        str = str.replaceAll("8", "�?�");
+        str = str.replaceAll("9", "�?�"); 
         return str;
-    }
+    }*/
 }
