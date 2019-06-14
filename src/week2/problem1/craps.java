@@ -17,7 +17,7 @@ public class craps {
     private final static int LOSE = 1;
     private final static int NEUTRAL = 0;
 
-    private final static Boolean DEBUG = true;
+    private final static Boolean DEBUG = false;
 
     // ! Construcor...
     public craps() {
@@ -29,13 +29,19 @@ public class craps {
     // ! Game runner:
     public int run() {
         comeOutRoll_result = comeOutRoll();
-        System.out.println("[Runner Debug:] retunned comeOutRoll Result is: "+this.comeOutRoll_result);
+        if(DEBUG){
+            System.out.println("[Runner Debug:] retunned comeOutRoll Result is: "+this.comeOutRoll_result);
+        }
         if (comeOutRoll_result == NEUTRAL) {
             int secondround_result = secondRound();
-            System.out.println("[Runner Debug:] secondround result is: " + secondround_result);
+            if(DEBUG){
+                System.out.println("[Runner Debug:] secondround result is: " + secondround_result);
+            }
             return secondround_result;
         } else {
-            System.out.println("[Runner Debug:] comeout result is: " + comeOutRoll_result);
+            if(DEBUG){
+                System.out.println("[Runner Debug:] comeout result is: " + comeOutRoll_result);
+            }
             return comeOutRoll_result;
         }
     }
@@ -48,7 +54,7 @@ public class craps {
 
     public int comeOutRoll() {
         this.comeOutRoll_value = rollDice();
-        System.out.println(comeOutRoll_value);
+        System.out.println("Comeout Roll value is: "+comeOutRoll_value);
         switch (this.comeOutRoll_value) {
         case 7:
         case 11:
@@ -91,6 +97,7 @@ public class craps {
         int secondRoundRoll_count = 1;
         while (secondRound_value != comeOutRoll_value && secondRound_value != 7) {
             secondRound_value = rollDice();
+            System.out.println("Second Time Roll Result is: "+secondRound_value);
             if (DEBUG) {
                 System.out.println("[SecondRoundRoll debug:] Rerolled second round for the " + secondRoundRoll_count
                         + " time. Current result: " + this.secondRound_value + " Needed: " + this.comeOutRoll_value);
@@ -100,14 +107,14 @@ public class craps {
 
         if (secondRound_value == comeOutRoll_value) {
             secondround_result = WIN;
-            System.out.println("[SecondRoundRoll Debug:] Roll = " + this.secondRound_value + ". Win.");
+            System.out.println("Second time Roll = " + this.secondRound_value + ". Win.");
             return secondround_result;
         } else if (secondRound_value == 7) {
             secondround_result = LOSE;
-            System.out.println("[SecondRoundRoll Debug:] Roll = " + this.secondRound_value + ". Lose.");
+            System.out.println("Second time Roll = " + this.secondRound_value + ". Lose.");
             return secondround_result;
         } else {
-            System.out.println("[SecondRoundRoll Debug:] Error, illegal return value");
+            System.out.println("[Fatal Error]Error, illegal return value");
             return secondround_result;
         }
     }

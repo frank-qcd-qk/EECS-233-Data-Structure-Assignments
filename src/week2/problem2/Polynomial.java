@@ -3,8 +3,6 @@ package week2.problem2;
 import java.security.InvalidParameterException;
 import java.util.*;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-import com.sun.media.sound.InvalidDataException;
 
 import week2.problem2.Tuple;
 
@@ -52,8 +50,6 @@ public class Polynomial {
      */
     @Override
     public String toString() {
-        // TODO: Provide methods to evaluatea given polynomial at some x and to print it
-        // TODO: as a string in a nice way.
         String returnner = "Input Polynomial is: ";
         for (int i = 0; i < degree.length; i++) {
             if (DEBUG) {
