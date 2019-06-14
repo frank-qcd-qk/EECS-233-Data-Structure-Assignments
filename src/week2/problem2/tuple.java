@@ -4,8 +4,8 @@ package week2.problem2;
 
 public class tuple{
     
-    private double u;
-    private double v;
+    private double u; //THIS IS THE COEFFICIENT
+    private double v; //THIS IS THE DEGREE
 
     public tuple(double uin, double vin){
         this.u = uin;
