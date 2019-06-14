@@ -4,7 +4,7 @@ import week2.problem2.tuple;
 
 
 public class main{
-
+    private static final Boolean DEBUG = true;
     public main(){
     }
 
@@ -19,9 +19,17 @@ public class main{
         try {
             int tupleIndexer = 0;
             for (int i = 0; i <args.length; i++){
-                args2tuple[tupleIndexer].set_u(Double.parseDouble(args[i]));
+                double coefficientHold = Double.parseDouble(args[i]);
                 i++;
-                args2tuple[tupleIndexer].set_v(Double.parseDouble(args[i]));
+                double degreeHold = Double.parseDouble(args[i]);
+                if (DEBUG){
+                    System.out.println("Tuple pair "+tupleIndexer+" is: Coefficient: "+coefficientHold+" Degree: "+degreeHold);
+                }
+                args2tuple[tupleIndexer].set_u(coefficientHold);
+                args2tuple[tupleIndexer].set_v(degreeHold);
+                if (DEBUG){
+                    System.out.println("args2tuple report: "+args2tuple.toString());
+                }
                 tupleIndexer++;
             }
         } 
