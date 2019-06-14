@@ -26,8 +26,8 @@ public class Main {
             // args = new String[] {"1","2","1","0"};
         }
         int count = args.length;
-        Scanner userInput = new Scanner(System.in);
-        double lowerBound, upperBound;
+        double lowerBound = 0;
+        double upperBound = 0;
         // ! Input is not a pair guard:
         if ((count % 2 != 0) || count == 0) {
             throw new IllegalArgumentException(
@@ -63,6 +63,7 @@ public class Main {
                     "[PSVM Debug]args2tuple check: 0: " + args2tuple[0].toString() + " 1: " + args2tuple[1].toString());
         }
         Polynomial worker = new Polynomial(args2tuple);
+        Scanner userInput = new Scanner(System.in);
         if (OVERIDEIO) {
             lowerBound = 0;
             upperBound = 4;
@@ -84,6 +85,7 @@ public class Main {
             }
             System.out.println();
         }
+        userInput.close();
         if (DEBUG) {
             System.out.println("Obtianed user inputs are: lower bound: " + lowerBound + " upper bound: " + upperBound);
         }
