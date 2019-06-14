@@ -1,6 +1,7 @@
 package week2.problem2;
 
 import com.sun.org.apache.regexp.internal.REUtil;
+import java.util.Arrays;
 
 public class polynomial{
 
@@ -21,13 +22,19 @@ public class polynomial{
             this.coefficient[i] = userTuple[i].get_u();
             this.degree[i] = userTuple[i].get_v();
         }
+
+        if (DEBUG){
+            System.out.println("[Constructor DEBUG]Coefficient is: "+Arrays.toString(coefficient));
+            System.out.println("[Constructor DEBUG]Coefficient is: "+Arrays.toString(degree));
+        }
+
     }
 
     @Override
     public String toString() {
         // TODO: Provide methods to evaluatea given polynomial at some x and to print it
         // TODO: as a string in a nice way.
-        String returnner = "Observer Polynomial is: ";
+        String returnner = "Input Polynomial is: ";
         for (int i = 0; i<degree.length;i++){
             if (DEBUG){
                 System.out.println("[toString Debug]Current retunner @ tuple pair "+i+" is: ");
@@ -68,6 +75,7 @@ public class polynomial{
     public double definiteIntegral(int[] bounds) {
         // TODO: You should do this by breaking up the [a,b] range into 1000 bins and
         // approximating the polynomial by a line in each bin
+        return 0;
     }
 
 
