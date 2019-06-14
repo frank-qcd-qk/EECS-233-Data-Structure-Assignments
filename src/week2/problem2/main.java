@@ -22,6 +22,7 @@ public class main{
                 double coefficientHold = Double.parseDouble(args[i]);
                 i++;
                 double degreeHold = Double.parseDouble(args[i]);
+                args2tuple[tupleIndexer] = new tuple();
                 if (DEBUG){
                     System.out.println("Tuple pair "+tupleIndexer+" is: Coefficient: "+coefficientHold+" Degree: "+degreeHold);
                 }
