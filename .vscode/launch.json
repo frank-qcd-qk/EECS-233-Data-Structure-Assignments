@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - main",
+            "request": "launch",
+            "mainClass": "week2.problem1.main",
+            "projectName": "2019_summer_233_group1_43dc416d"
+        }
+    ]
+}

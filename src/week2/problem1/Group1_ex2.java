@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Group1_ex2 {
 
-  private static final boolean DEBUG = true;
+  private static final boolean DEBUG = false;
   private static final int DICE_COUNT = 2;
   private static final int DICE_1 = 0;
   private static final int DICE_2 = 1;
@@ -97,7 +97,9 @@ public class Group1_ex2 {
 
   // !Roll result getter
   public int[] getRollResult() {
-    System.out.println("[Group1_ex2 DEBUG]: get rolle result is: "+rollResult.toString());
+    if (DEBUG){
+      System.out.println("[Group1_ex2 DEBUG]: get rolle result is: "+rollResult.toString());
+    }
     return rollResult;
   }
 

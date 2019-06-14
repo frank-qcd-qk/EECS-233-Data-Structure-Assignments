@@ -1,12 +1,16 @@
 package week2.problem1;
-
+import week2.problem1.craps;
 public class main {
 
     private final static int WIN = 2;
     private final static int LOSE = 1;
-    private final static int NEUTRAL = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        test_100k();
+    }
+
+
+    public static void test() {
         craps game_single = new craps();
         if (game_single.run() == WIN) {
             System.out.println("Win!");
@@ -26,16 +30,20 @@ public class main {
         craps game_single = new craps();
         int win_counter = 0;
         int lose_counter = 0;
-        for (int i = 0; i < 100000; i++) {
-            if (game_single.run() == WIN) {
+        for (int i = 0; i < 100000000; i++) {
+            System.out.println("===================Round "+i+"===================");
+            int getResult =game_single.run();
+            System.out.println("[Main Runner Debug] Obatianed result from crap is: "+getResult);
+            if ( getResult== WIN) {
                 win_counter++;
-            } else if (game_single.run() == LOSE) {
+            } else if (getResult == LOSE) {
                 lose_counter++;
             } else {
                 System.out.println("[FATAL ERROR!:] Win or Lose status not defined!");
                 while (1>0)
                     ;
             }
+            System.out.println("===================End===================");
         }
         System.out.println("===============RESULT===============");
         System.err.println("Total win: " + win_counter);

@@ -23,8 +23,13 @@ public class tuple{
         this.v = newVal;
     }
 
+    @Override
+    public String toString(){
+        //TODO:  toString method to print a Tuple
+    }
 
     public tuple(){
 
     }
+
 }
