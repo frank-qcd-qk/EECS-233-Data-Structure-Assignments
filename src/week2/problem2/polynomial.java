@@ -13,11 +13,13 @@ public class polynomial{
         
         this.coefficient = new double[userTuple.length];
         this.degree = new double[userTuple.length];
-        if (coefficient.length != degree.length){
+        
+        if (this.coefficient.length != this.degree.length){
             throw new ArrayIndexOutOfBoundsException();
         }
 
         for (int i=0; i < userTuple.length; i++){
+            String 
             this.coefficient[i] = userTuple[i].get_u();
             this.degree[i] = userTuple[i].get_v();
         }
