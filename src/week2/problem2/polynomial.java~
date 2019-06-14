@@ -85,17 +85,17 @@ public class polynomial{
 
 
     // Code refered to stackoverflow: https://stackoverflow.com/questions/8058768/superscript-in-java-string/8058953
-   /* private static String superscript(String str) {
-        str = str.replaceAll("0", "‚?∞");
+    private static String superscript(String str) {
+        str = str.replaceAll("0", "‚Å∞");
         str = str.replaceAll("1", "¬π");
         str = str.replaceAll("2", "¬≤");
         str = str.replaceAll("3", "¬≥");
-        str = str.replaceAll("4", "‚?¥");
-        str = str.replaceAll("5", "‚?µ");
-        str = str.replaceAll("6", "‚?∂");
-        str = str.replaceAll("7", "‚?∑");
-        str = str.replaceAll("8", "‚?∏");
-        str = str.replaceAll("9", "‚?π"); 
+        str = str.replaceAll("4", "‚Å¥");
+        str = str.replaceAll("5", "‚Åµ");
+        str = str.replaceAll("6", "‚Å∂");
+        str = str.replaceAll("7", "‚Å∑");
+        str = str.replaceAll("8", "‚Å∏");
+        str = str.replaceAll("9", "‚Åπ"); 
         return str;
-    } */
+    }
 }
