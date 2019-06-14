@@ -20,6 +20,7 @@ public class main{
         catch (IllegalArgumentException e){
             System.out.println("All arguments must be doubles.");
         }
-        polynomial worker = new polynomial();
+        polynomial worker = new polynomial(args2tuple);
+        worker.toString();
     }
 }
