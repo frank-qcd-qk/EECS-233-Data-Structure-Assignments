@@ -1,6 +1,7 @@
 package week2.problem2;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import week2.problem2.Polynomial;
 import week2.problem2.Tuple;
@@ -15,8 +16,8 @@ public class Main {
     public static void main(String[] args) {
         Tuple[] args2tuple;
         if (OVERIDEIO) {
-            //args = new String[] { "5.2", "3", "-2", "1", "7.5", "-1", "3", "0" };
-            args = new String[] {"1","2","1","0"};
+            args = new String[] { "5.2", "3", "-2", "1", "7.5", "-1", "3", "0" };
+            //args = new String[] {"1","2","1","0"};
         }
         int count = args.length;
         Scanner userInput = new Scanner(System.in);
@@ -73,6 +74,7 @@ public class Main {
         double integralResult = worker.definiteIntegral(bounds);
         System.out.println("The definite integral of polynomial: " + polynomialExpression + "between [" + lowerBound
                 + "," + upperBound + "] is "+integralResult);
-        System.out.println("Execution time: "+worker.getExecutionTime()/1_000_000+" Miliseconds");
+        long runTime = TimeUnit.MILLISECONDS.convert(worker.getExecutionTime(),TimeUnit.NANOSECONDS);
+        System.out.println("Time taken to compute the integral: "+runTime+" Miliseconds");
     }
 }
