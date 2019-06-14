@@ -63,7 +63,7 @@ public class polynomial{
                 String tempHold = Double.toString(degree[i]);
                 returnner += superscript(tempHold);
                 */
-                returnner +=" )";
+                returnner +=")";
             } else if(degree[i]==0){
                 //? Degree = 0, there is no need to display x
                 returnner += " ";
