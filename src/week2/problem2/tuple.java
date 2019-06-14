@@ -31,8 +31,8 @@ public class tuple{
     public static void set_v(double newVal){
         v = newVal;
     }
-
-    public String toString(double uval, double vval){
-        return "Tuple (" + uval + ", " + vval + ")";
+    @Override
+    public String toString(){
+        return "Tuple (" + get_u() + ", " + get_v() + ")";
     }
 }

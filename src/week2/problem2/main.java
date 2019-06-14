@@ -14,7 +14,7 @@ public class main{
         if ((count%2 != 0)|| count == 0){
             throw new IllegalArgumentException("All tuples need a coefficient argument and a degree argument.");
         } else{
-            args2tuple = new tuple[count];
+            args2tuple = new tuple[count/2];
         }
         try {
             int tupleIndexer = 0;
@@ -22,7 +22,6 @@ public class main{
                 double coefficientHold = Double.parseDouble(args[i]);
                 i++;
                 double degreeHold = Double.parseDouble(args[i]);
-                args2tuple[tupleIndexer] = new tuple();
                 if (DEBUG){
                     System.out.println("Tuple pair "+tupleIndexer+" is: Coefficient: "+coefficientHold+" Degree: "+degreeHold);
                 }
