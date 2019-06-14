@@ -19,6 +19,9 @@ public class main{
         try {
             int tupleIndexer = 0;
             for (int i = 0; i <args.length; i++){
+                if (DEBUG){
+                    System.out.println("Current args is: "+args[i]);
+                }
                 double coefficientHold = Double.parseDouble(args[i]);
                 i++;
                 double degreeHold = Double.parseDouble(args[i]);
