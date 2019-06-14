@@ -7,6 +7,11 @@ public class tuple{
     private double u;
     private double v;
 
+    public tuple(double uin, double vin){
+        this.u = uin;
+        this.v = vin;
+    }
+
     public double get_u(){
         return this.u;
     }
@@ -23,13 +28,7 @@ public class tuple{
         this.v = newVal;
     }
 
-    @Override
-    public String toString(){
-        //TODO:  toString method to print a Tuple
+    public String toString(double uval, double vval){
+        return "(" + uval + ", " + vval + ")";
     }
-
-    public tuple(){
-
-    }
-
 }
