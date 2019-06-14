@@ -29,6 +29,6 @@ public class tuple{
     }
 
     public String toString(double uval, double vval){
-        return "(" + uval + ", " + vval + ")";
+        return "Tuple (" + uval + ", " + vval + ")";
     }
 }

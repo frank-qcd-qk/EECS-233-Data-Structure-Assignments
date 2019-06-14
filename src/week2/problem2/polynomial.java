@@ -1,15 +1,14 @@
 package week2.problem2;
 
-public class Polynomial{
+public class polynomial{
 
-    private double coefficient;
-    private double degree; 
-    private double variable;
+    private double[] coefficient;
+    private double[] degree; 
 
-    public Polynomial(tuple[] input){
-        for (i=0; i < tuple.length(); i++){
-            this.coefficient = input[i].get_u();
-            this.degree = input[i].get_v();
+    public Polynomial(tuple[] userTuple){
+        for (i=0; i < userTu/ple.length(); i++){
+            this.coefficient = userTuple[i].get_u();
+            this.degree = userTuple[i].get_v();
         }
     }
 
@@ -17,6 +16,7 @@ public class Polynomial{
     public String toString() {
         // TODO: Provide methods to evaluatea given polynomial at some x and to print it
         // TODO: as a string in a nice way.
+
     }
 
     public double definiteIntegral(int[] bounds) {
