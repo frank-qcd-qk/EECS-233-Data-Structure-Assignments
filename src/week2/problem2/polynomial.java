@@ -19,8 +19,14 @@ public class polynomial{
         }
 
         for (int i=0; i < userTuple.length; i++){
-            coefficient[i] = userTuple[i].get_u();
-            degree[i] = userTuple[i].get_v();
+            
+            double currentCoefficient = userTuple[i].get_u();
+            double currentDegree = userTuple[i].get_v();
+            coefficient[i] = currentCoefficient;
+            degree[i] = currentDegree;
+            if(DEBUG){
+                System.out.println("[Constructor DEBUG]Tuple pair @ "+ i+"Coefficient: "+currentCoefficient+" Degree: "+currentDegree);
+            }
         }
 
         if (DEBUG){
