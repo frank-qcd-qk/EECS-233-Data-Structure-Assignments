@@ -76,5 +76,6 @@ public class Main {
                 + "," + upperBound + "] is "+integralResult);
         long runTime = TimeUnit.MILLISECONDS.convert(worker.getExecutionTime(),TimeUnit.NANOSECONDS);
         System.out.println("Time taken to compute the integral: "+runTime+" Miliseconds");
+        System.out.println("Raw execution nanoseconds: "+worker.getExecutionTime());
     }
 }
