@@ -1,0 +1,3 @@
+# problem 2
+In this problem, we took a relative standard trapizoidal integral calculation method to approach the problem.
+However, it is worth pointing out that there is no easy way to do superscript in commandline. I tried to use pre-defined non-unicode characters, however, seems that not every computer likes that. Therefore we fall back to the standard x^2 display method and wrapped a parathesis around it to guarantee its visual comfortness.
