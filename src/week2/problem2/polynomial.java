@@ -5,10 +5,17 @@ public class polynomial{
     private double[] coefficient;
     private double[] degree; 
 
-    public Polynomial(tuple[] userTuple){
-        for (i=0; i < userTu/ple.length(); i++){
-            this.coefficient = userTuple[i].get_u();
-            this.degree = userTuple[i].get_v();
+    public polynomial(tuple[] userTuple){
+        
+        this.coefficient = new double[userTuple.length];
+        this.degree = new double[userTuple.length];
+        if (coefficient.length != degree.length){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        
+        for (int i=0; i < userTuple.length; i++){
+            this.coefficient[i] = userTuple[i].get_u();
+            this.degree[i] = userTuple[i].get_v();
         }
     }
 
