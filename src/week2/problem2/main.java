@@ -38,6 +38,9 @@ public class main{
         catch (IllegalArgumentException e){
             System.out.println("All arguments must be doubles.");
         }
+        if (DEBUG){
+            System.out.println("args2tuple check: 0: " +args2tuple[0].toString()+" 1: "+ args2tuple[1].toString());
+        }
         polynomial worker = new polynomial(args2tuple);
         worker.toString();
     }
