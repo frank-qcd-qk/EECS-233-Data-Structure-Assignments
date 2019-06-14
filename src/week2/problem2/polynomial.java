@@ -86,6 +86,7 @@ public class polynomial{
 
 
     // Code refered to stackoverflow: https://stackoverflow.com/questions/8058768/superscript-in-java-string/8058953
+    /*
     private static String superscript(String str) {
         str = str.replaceAll("0", "⁰");
         str = str.replaceAll("1", "¹");
@@ -98,5 +99,5 @@ public class polynomial{
         str = str.replaceAll("8", "⁸");
         str = str.replaceAll("9", "⁹"); 
         return str;
-    }
+    }*/
 }
