@@ -1,7 +1,6 @@
 package week2.problem2;
-
-import com.sun.org.apache.regexp.internal.REUtil;
 import java.util.Arrays;
+import week2.problem2.tuple;
 
 public class polynomial{
 
@@ -51,18 +50,24 @@ public class polynomial{
             //! Process degree
             if (degree[i]>0){
                 ///? Degree >0, we include x
-                returnner += "x";
+                returnner += "*(x";
+                returnner += "^"+degree[i];
+                /*
                 String tempHold = Double.toString(degree[i]);
                 returnner += superscript(tempHold);
-                returnner +=" ";
+                */
+                returnner +=" )";
             } else if(degree[i]==0){
                 //? Degree = 0, there is no need to display x
                 returnner += " ";
             } else if(degree[i]<0){
                 //? Degree <0, we display as 1/x method, but added paranthesis
                 returnner += "/(x";
+                returnner += "^"+degree[i];
+                /*
                 String tempHold = Double.toString(-degree[i]);
                 returnner += superscript(tempHold);
+                */
                 returnner +=") ";
             }
         }
