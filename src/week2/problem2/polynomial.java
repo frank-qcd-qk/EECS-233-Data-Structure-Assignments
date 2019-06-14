@@ -6,22 +6,21 @@ public class polynomial{
 
     private static final Boolean DEBUG = true;
 
-    private double[] coefficient;
-    private double[] degree;
+    private static double[] coefficient;
+    private static double[] degree;
 
     public polynomial(tuple[] userTuple){
         
-        this.coefficient = new double[userTuple.length];
-        this.degree = new double[userTuple.length];
-        
-        if (this.coefficient.length != this.degree.length){
+        coefficient = new double[userTuple.length];
+        degree = new double[userTuple.length];
+
+        if (coefficient.length != degree.length){
             throw new ArrayIndexOutOfBoundsException();
         }
 
         for (int i=0; i < userTuple.length; i++){
-            String 
-            this.coefficient[i] = userTuple[i].get_u();
-            this.degree[i] = userTuple[i].get_v();
+            coefficient[i] = userTuple[i].get_u();
+            degree[i] = userTuple[i].get_v();
         }
 
         if (DEBUG){
