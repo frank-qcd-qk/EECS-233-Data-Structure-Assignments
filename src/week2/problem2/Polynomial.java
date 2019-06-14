@@ -38,7 +38,7 @@ public class Polynomial {
         }
 
         if (coefficient.length!=degree.length){
-            throw new ArrayIndexOutOfBoundsException("[Fatal Error!] Something messed up during the constructor phase!")
+            throw new ArrayIndexOutOfBoundsException("[Fatal Error!] Something messed up during the constructor phase!");
         }
         if (DEBUG) {
             System.out.println("[Constructor DEBUG]Coefficient is: " + Arrays.toString(coefficient));
