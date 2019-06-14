@@ -8,9 +8,10 @@ public class main{
     public main(){
     }
 
-    public static void main(Strings[] args){
+    public static void main(String[] args){
         tuple[] args2tuple;
-        if (args%2 != 0){
+        int count = args.length;
+        if (count%2 != 0){
             throw new IllegalArgumentException("All tuples need a coefficient argument and a degree argument.");
         }
         try {
