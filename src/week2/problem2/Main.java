@@ -6,6 +6,11 @@ import java.util.concurrent.TimeUnit;
 import week2.problem2.Polynomial;
 import week2.problem2.Tuple;
 
+/*
+! The option DEBUG allows the full screen outputs
+! The option OVERIDEIO allows no user interaction debug
+*/
+
 public class Main {
     private static final Boolean DEBUG = false;
     private static final Boolean OVERIDEIO = false;
@@ -22,12 +27,14 @@ public class Main {
         int count = args.length;
         Scanner userInput = new Scanner(System.in);
         double lowerBound, upperBound;
+        //! Input is not a pair guard:
         if ((count % 2 != 0) || count == 0) {
             throw new IllegalArgumentException(
                     "[Fatal Error!] All tuples need a coefficient argument and a degree argument.");
         } else {
             args2tuple = new Tuple[count / 2];
         }
+        //! Input is pair but not double guard
         try {
             int tupleIndexer = 0;
             for (int i = 0; i < args.length; i++) {
@@ -70,11 +77,14 @@ public class Main {
             System.out.println("Obtianed user inputs are: lower bound: " + lowerBound + " upper bound: " + upperBound);
         }
         double[] bounds = new double[]{lowerBound,upperBound};
+        //! Temporary hold the expression for polynomial
         String polynomialExpression = worker.toString();
+        //! Temporarily hold the integration result
         double integralResult = worker.definiteIntegral(bounds);
+        //!UI Interaction
+        long runTime = TimeUnit.MILLISECONDS.convert(worker.getExecutionTime(),TimeUnit.NANOSECONDS);
         System.out.println("The definite integral of polynomial: " + polynomialExpression + "between [" + lowerBound
                 + "," + upperBound + "] is "+integralResult);
-        long runTime = TimeUnit.MILLISECONDS.convert(worker.getExecutionTime(),TimeUnit.NANOSECONDS);
         System.out.println("Time taken to compute the integral: "+runTime+" Miliseconds");
         System.out.println("Raw execution nanoseconds: "+worker.getExecutionTime());
     }
