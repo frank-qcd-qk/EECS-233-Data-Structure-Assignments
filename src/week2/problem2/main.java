@@ -29,7 +29,8 @@ public class main{
                 args2tuple[tupleIndexer].set_u(coefficientHold);
                 args2tuple[tupleIndexer].set_v(degreeHold);
                 if (DEBUG){
-                    System.out.println("args2tuple report: "+args2tuple.toString());
+                    String hold = args2tuple[tupleIndexer].toString();
+                    System.out.println("args2tuple report: "+hold);
                 }
                 tupleIndexer++;
             }

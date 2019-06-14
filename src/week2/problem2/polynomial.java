@@ -1,25 +1,26 @@
 package week2.problem2;
 import java.util.Arrays;
 import week2.problem2.tuple;
-
+//mod
 public class polynomial{
 
     private static final Boolean DEBUG = true;
 
-    private double[] coefficient;
-    private double[] degree;
+    private static double[] coefficient;
+    private static double[] degree;
 
     public polynomial(tuple[] userTuple){
         
-        this.coefficient = new double[userTuple.length];
-        this.degree = new double[userTuple.length];
+        coefficient = new double[userTuple.length];
+        degree = new double[userTuple.length];
+
         if (coefficient.length != degree.length){
             throw new ArrayIndexOutOfBoundsException();
         }
 
         for (int i=0; i < userTuple.length; i++){
-            this.coefficient[i] = userTuple[i].get_u();
-            this.degree[i] = userTuple[i].get_v();
+            coefficient[i] = userTuple[i].get_u();
+            degree[i] = userTuple[i].get_v();
         }
 
         if (DEBUG){
@@ -85,17 +86,18 @@ public class polynomial{
 
 
     // Code refered to stackoverflow: https://stackoverflow.com/questions/8058768/superscript-in-java-string/8058953
-   /* private static String superscript(String str) {
-        str = str.replaceAll("0", "â?°");
+    /*
+    private static String superscript(String str) {
+        str = str.replaceAll("0", "â°");
         str = str.replaceAll("1", "Â¹");
         str = str.replaceAll("2", "Â²");
         str = str.replaceAll("3", "Â³");
-        str = str.replaceAll("4", "â?´");
-        str = str.replaceAll("5", "â?µ");
-        str = str.replaceAll("6", "â?¶");
-        str = str.replaceAll("7", "â?·");
-        str = str.replaceAll("8", "â?¸");
-        str = str.replaceAll("9", "â?¹"); 
+        str = str.replaceAll("4", "ï¿½?ï¿½");
+        str = str.replaceAll("5", "ï¿½?ï¿½");
+        str = str.replaceAll("6", "ï¿½?ï¿½");
+        str = str.replaceAll("7", "ï¿½?ï¿½");
+        str = str.replaceAll("8", "ï¿½?ï¿½");
+        str = str.replaceAll("9", "ï¿½?ï¿½"); 
         return str;
-    } */
+    }*/
 }

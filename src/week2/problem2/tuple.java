@@ -4,32 +4,32 @@ package week2.problem2;
 
 public class tuple{
     
-    private double u; //THIS IS THE COEFFICIENT
-    private double v; //THIS IS THE DEGREE
+    private static double u; //THIS IS THE COEFFICIENT
+    private static double v; //THIS IS THE DEGREE
 
     public tuple(){
-        
+
     }
 
     public tuple(double uin, double vin){
-        this.u = uin;
-        this.v = vin;
+        u = uin;
+        v = vin;
     }
 
-    public double get_u(){
-        return this.u;
+    public static double get_u(){
+        return u;
     }
 
-    public double get_v(){
-        return this.v;
+    public static double get_v(){
+        return v;
     }
 
-    public void set_u(double newVal){
-        this.u = newVal;
+    public static void set_u(double newVal){
+        u = newVal;
     }
 
-    public void set_v(double newVal){
-        this.v = newVal;
+    public static void set_v(double newVal){
+        v = newVal;
     }
 
     public String toString(double uval, double vval){
