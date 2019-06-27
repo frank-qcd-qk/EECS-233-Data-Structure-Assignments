@@ -116,9 +116,6 @@ public class RandomWriter {
                     probabilityTablePointer = lookupTableIndexer;
                 }
             }
-
-
-
         }
         if (DEBUG){
             System.out.println("==========GenerateProbablistics Debug 1==========");
