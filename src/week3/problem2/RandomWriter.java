@@ -5,18 +5,21 @@ import java.io.*;
 
 public class RandomWriter {
     private final static boolean DEBUG = true;
-    
-    //! Initializaion vars
+
+    // ! Initializaion vars
     private int k, length;
     private String fileSource, outPut;
     private static boolean initComplete = false;
 
-
     private String sourceText;
 
+    private List<ArrayList<Object>> probabilityTable = new ArrayList<ArrayList<Object>>();
+    private List<String> lookupTable = new ArrayList<String>();
 
+    // ! Performance analyzer
+    private long fileReader_start, fileReader_end, fileReader_time;
 
-    //! Constructor
+    // ! Constructor
     public RandomWriter(int IO_k, int IO_length, String IO_fileSource, String IO_outPut) {
         this.k = IO_k;
         this.length = IO_length;
@@ -25,29 +28,52 @@ public class RandomWriter {
         initComplete = true;
     }
 
-    public void readFromSource(){
-        try {
-            File sourceInput = new File(this.fileSource); //Create file object
-            FileReader reader = new FileReader(sourceInput); //Start file object reader
-            StringBuffer stringBuilder = new StringBuffer(); //Create string builder object
+    public void sequentialRunner(){
+        if (!initComplete){
+            throw new ExceptionInInitializerError("[Fatal]Constructor Failed to populate key global variables!");
+        }
+        readFromSource();
+        generateProbablisitics();
+    }
 
-            //* Read file:
+
+    /**
+     * readFromSource Method
+     * <p>
+     * This function reads a local file specified by the constructor and store its
+     * content into sourceText global variable
+     * </p>
+     * 
+     * @author Chude Qian CXQ41
+     * @version 1.0
+     */
+    private void readFromSource() {
+        fileReader_start = System.currentTimeMillis();
+        try {
+            File sourceInput = new File(this.fileSource); // Create file object
+            FileReader reader = new FileReader(sourceInput); // Start file object reader
+            StringBuffer stringBuilder = new StringBuffer(); // Create string builder object
+
+            // * Read file:
             int charCount;
             int totalCharCount = 0;
-            char[] charBuffer = new char[1]; //Create a batch read buffer of 1024
-            while((charCount = reader.read(charBuffer))>0){
+            char[] charBuffer = new char[1]; // Create a batch read buffer of 1024
+            while ((charCount = reader.read(charBuffer)) > 0) {
                 stringBuilder.append(charBuffer);
                 totalCharCount += charCount;
             }
 
             reader.close();
-            sourceText = stringBuilder.toString();
+            this.sourceText = stringBuilder.toString();
+            fileReader_end = System.currentTimeMillis();
+            fileReader_time = fileReader_end - fileReader_start;
 
-            if(DEBUG){
+            if (DEBUG) {
                 System.out.println("==========readFromSource Report==========");
-                System.out.println("Total read characters: "+totalCharCount);
                 System.out.println("Observed input from file: ");
                 System.out.println(sourceText);
+                System.out.println("Total read characters: " + totalCharCount);
+                System.out.println("Time Consumed: " + fileReader_time + " Milliseconds");
                 System.out.println("==========readFromSource End==========");
             }
 
@@ -57,25 +83,32 @@ public class RandomWriter {
         }
     }
 
-
-
-    // Otherwise, your program should analyze the source text to construct a
-    // k-dimensional probability matrix.
-    // Here, if k=2, P[‘a’][‘b’][‘c’] will contain the probability that the
-    // character ‘c’ will follow the string “ab”. Similarly, if k =3,
-    // P[‘a’][‘b’][‘c’][‘d’] will contain the probability that the character ‘d’
-    // will follow the string “abc”, and so on.
-
-    // To calculate these probabilities, find every occurrence of the string, say
-    // “ab”, and find what characters follow it and their frequencies. Then set the
-    // probabilities to be proportional to the frequencies. Use these probabilities
-    // to repeatedly choose the next character of the text.
-
-    private void calculateProbablistics(){
-
-    }
-
     
+    private void generateProbablisitics() {
+        int sourceTextIndexer = 0;
+        while((sourceTextIndexer<(sourceText.length()-2))){
+            //! Build the indexer
+            StringBuilder segmetation = new StringBuilder(this.k);
+            List<Character> temperary = new ArrayList<Character>();
+
+            //! Get the segmented two character
+            char char1 = sourceText.charAt(sourceTextIndexer);
+            char char2 = sourceText.charAt(sourceTextIndexer+1);
+            if(Character.isLetter(char1)&&Character.isLetter(char2)){
+                segmetation.append(char1);
+                segmetation.append(char2);
+                
+                lookupTable.add(segmetation.toString());
+            }
+            sourceTextIndexer++;
+        }
+        if (DEBUG){
+            System.out.println("==========GenerateProbablistics Debug 1==========");
+            System.out.println("Current Index table looks like: ");
+            System.out.println(lookupTable.toString());
+            System.out.println("==========GenerateProbablistics Debug 1 END==========");
+        }
+    }
 
     // Your class should have a main method that takes the following four command
     // line arguments
@@ -91,7 +124,9 @@ public class RandomWriter {
     // terminate.
 
     public static void main(String args[]) {
-        RandomWriter wordGen = new RandomWriter(2,3,"/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt","result.txt");
-        wordGen.readFromSource();
+        RandomWriter wordGen = new RandomWriter(2, 3,
+                "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
+                "result.txt");
+        wordGen.sequentialRunner();
     }
 }
