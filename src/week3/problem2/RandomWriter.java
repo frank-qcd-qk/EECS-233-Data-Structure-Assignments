@@ -86,21 +86,39 @@ public class RandomWriter {
     
     private void generateProbablisitics() {
         int sourceTextIndexer = 0;
-        while((sourceTextIndexer<(sourceText.length()-2))){
-            //! Build the indexer
+        int lookupTableIndexer = 0;
+        int probabilityTablePointer =0;
+        while((sourceTextIndexer<(sourceText.length()-this.k))){
+            //! Local Burnable variables
             StringBuilder segmetation = new StringBuilder(this.k);
             List<Character> temperary = new ArrayList<Character>();
 
-            //! Get the segmented two character
-            char char1 = sourceText.charAt(sourceTextIndexer);
-            char char2 = sourceText.charAt(sourceTextIndexer+1);
-            if(Character.isLetter(char1)&&Character.isLetter(char2)){
-                segmetation.append(char1);
-                segmetation.append(char2);
-                
-                lookupTable.add(segmetation.toString());
+
+            //! Sgement the characters by index
+            boolean successSegment = true;
+            for (int i = 0; i < this.k;i++){
+                char tempChar = sourceText.charAt(sourceTextIndexer+i);
+                if (Character.isLetter(tempChar)){
+                    segmetation.append(tempChar);
+                }else{
+                    successSegment = false;
+                    break;
+                }
             }
-            sourceTextIndexer++;
+            sourceTextIndexer+= this.k -1;
+
+            //! Append to seed lookup table only if it is not a dupe
+            if (successSegment){
+                probabilityTablePointer=lookupTable.indexOf(segmetation.toString());
+                if(probabilityTablePointer==-1){
+                    lookupTable.add(segmetation.toString());
+                    lookupTableIndexer++;
+                    probabilityTablePointer = lookupTableIndexer;
+                }
+            }
+
+
+
         }
         if (DEBUG){
             System.out.println("==========GenerateProbablistics Debug 1==========");
