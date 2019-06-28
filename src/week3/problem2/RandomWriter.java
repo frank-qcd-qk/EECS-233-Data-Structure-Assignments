@@ -3,6 +3,7 @@ package week3.problem2;
 import java.util.*;
 import java.io.*;
 import java.util.concurrent.TimeUnit;
+import week3.problem1.*;
 
 public class RandomWriter {
     private final static boolean DEBUG = true;
@@ -17,9 +18,12 @@ public class RandomWriter {
     private String returnText;
 
     // ! The dictionary for the program
-    private ArrayList<ArrayList<Character>> probabilityTable = new ArrayList<ArrayList<Character>>();
-    private ArrayList<String> lookupTable = new ArrayList<String>();
+    // private ArrayList<ArrayList<Character>> probabilityTable = new
+    // ArrayList<ArrayList<Character>>();
+    // private ArrayList<String> lookupTable = new ArrayList<String>();
 
+    private MUnboundedArray lookupTable = new MUnboundedArray(1);
+    private MUnboundedArray probabilityTable = new MUnboundedArray(1);
     // ! Performance analyzer
     private long fileReader_start, fileReader_end, fileReader_time;
     private long dictionaryGenerator_start, dictionGenerator_end, dictionGenerator_time;
@@ -121,7 +125,7 @@ public class RandomWriter {
 
             // ! Local Burnable variables
             StringBuilder segmetation = new StringBuilder(this.k);
-            ArrayList<Character> temperary = new ArrayList<Character>();
+            MUnboundedArray temperary = new MUnboundedArray(1);
 
             // ! Sgement the characters by index
             boolean successSegment = true;
@@ -163,7 +167,7 @@ public class RandomWriter {
                     probabilityTable.add(temperary);
                     // }
                 } else {
-                    temperary = probabilityTable.get(probabilityTablePointer);
+                    temperary = (MUnboundedArray) probabilityTable.get(probabilityTablePointer);
                     // if((sourceText.charAt(sourceTextIndexer + this.k - 1) == '
                     // ')||(Character.isLetter(sourceText.charAt(sourceTextIndexer + this.k - 1)))){
                     temperary.add(sourceText.charAt(sourceTextIndexer + this.k - 1));
@@ -259,7 +263,7 @@ public class RandomWriter {
                 System.out.println("Seed Index: " + lookupIndex);
             }
             // * handles pair not found issue
-            if (((lookupIndex) == -1) || (probabilityTable.get(lookupIndex).size() == 0)) {
+            if (((lookupIndex) == -1)) {
                 if (DEBUG) {
                     System.out.println("Seed is not a valid seed, retry...");
                 }
@@ -270,12 +274,13 @@ public class RandomWriter {
                     }
                     retTextBuilder.append(currentSeed);
                     lookupIndex = lookupTable.indexOf(currentSeed);
-                } while ((!((lookupIndex) >= 0)) || (probabilityTable.get(lookupIndex).size() == 0));
+                } while ((!((lookupIndex) >= 0)));
             }
 
             // * looks for the possible word choice and add
-            int randomSelector = randomGenerator(probabilityTable.get(lookupIndex).size());
-            Character nextPossible = probabilityTable.get(lookupIndex).get(randomSelector);
+            MUnboundedArray temp = (MUnboundedArray) probabilityTable.get(lookupIndex);
+            int randomSelector = randomGenerator(temp.size());
+            Character nextPossible = (Character) temp.get(randomSelector);
             if (DEBUG) {
                 System.out.println("Picked next possible characer: |" + nextPossible + "|");
             }
@@ -300,6 +305,7 @@ public class RandomWriter {
         this.returnText = retTextBuilder.toString();
         return this.returnText;
     }
+
     /**
      * writeToSource Method
      * <p>
@@ -308,7 +314,7 @@ public class RandomWriter {
      * 
      * @throws IOexception
      */
-    private void writeToSource(){
+    private void writeToSource() {
         fileWrite_start = System.nanoTime();
         try {
             File writeFile = new File(this.outPut);
@@ -354,11 +360,13 @@ public class RandomWriter {
      */
     public static void main(String args[]) {
         if (DEBUG) {
-            RandomWriter wordGen = new RandomWriter(3, 100,
-                    "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
-                    "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/result.txt");
-            wordGen.sequentialRunner();
-            System.out.println(wordGen.getOPTime());
+            for (int i = 0; i < 1000; i++) {
+                RandomWriter wordGen = new RandomWriter(2, 100,
+                        "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
+                        "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/result.txt");
+                wordGen.sequentialRunner();
+                System.out.println(wordGen.getOPTime());
+            }
         } else {
             int userInput_k = 0;
             int userInput_length = 0;
