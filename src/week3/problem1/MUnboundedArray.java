@@ -15,8 +15,7 @@ public class MUnboundedArray <T extends Object>{
     }
 
     public Object get(int index){
-        Object output = this.unArray[index];
-        return output;   
+        return this.unArray[index];
     }
 
     public void set(int index, Object thing){
