@@ -4,6 +4,8 @@ public class MUnboundedArray <T extends Object>{
     
     private final static boolean DEBUG = true;
     private int size;
+    private int arrayPlace = 0;
+    private int subArrayPlace = 0;
     private int subsize;
     private T unArray[][];
     private T tempArray[][];
@@ -52,7 +54,17 @@ public class MUnboundedArray <T extends Object>{
         unArray = tempArray;
     }
 
-
+    public void grow(){
+        boolean arrayCheck = true;
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < 1; j++){
+                if (this.unArray[i][j] == null){
+                    arrayCheck = false;
+                }
+            }
+        }
+         
+    }
 
 }
 
