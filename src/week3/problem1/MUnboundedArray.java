@@ -1,22 +1,23 @@
 package week3.problem1;
 
+import java.lang.reflect.Array;
+
 public class MUnboundedArray <T extends Object>{
     
     private final static boolean DEBUG = true;
     private int size;
-    private int arrayPlace = 0;
-    private int subArrayPlace = 0;
     private int subsize;
-    private T unArray[][];
+    private Object unArray;
 
-    public MUnboundedArray(int size, int subsize){
+    public MUnboundedArray(int dimensions, int size, int subsize){
         this.size = size;
         this.subsize = subsize;
-        this.unArray = (T[][]) new Object[size][subsize];
+        int[] sizes = new int[dimensions];
+        unArray = Array.newInstance(String.class, sizes);
     }
 
-    public T get(int index, int subIndex){
-        T output = this.unArray[index][subIndex];
+    public Object get(int index, int subIndex){
+        Object output = this.unArray[index][subIndex];
         return output;   
     }
 
@@ -44,10 +45,11 @@ public class MUnboundedArray <T extends Object>{
     }
 
     public void reallocate(int newSize, int newSubSize){
-        T[][] tempArray = (T[][]) new Object[newSize][newSubSize];
+        int[] intArray = new int[newSize];
+        Object tempArray = Array.newInstance(String.class, intArray);
         for (int i = 0; i > size; i++){
             for (int j = 0; j > subsize; j++){
-                tempArray[i][j] = unArray[i][j];
+                tempArray = unArray;
             }
         }
         unArray = tempArray;
