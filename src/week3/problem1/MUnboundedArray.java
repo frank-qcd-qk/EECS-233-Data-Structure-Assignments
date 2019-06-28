@@ -14,7 +14,7 @@ public class MUnboundedArray <T extends Object>{
         this.unArray = copyArray;
     }
 
-    public Object get(int index){
+    public T get(int index){
         return this.unArray[index];
     }
 
@@ -24,7 +24,7 @@ public class MUnboundedArray <T extends Object>{
 
     public int size(){
         counter = 0;
-        for(int i = 0; i < unArray.length; i++){           
+        for(int i = 0; i < placeholder; i++){           
             if (this.unArray[i] != null){
                 counter++;
             }
