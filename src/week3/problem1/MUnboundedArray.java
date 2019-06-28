@@ -1,5 +1,7 @@
 package week3.problem1;
 
+import java.lang.reflect.Array;
+
 public class MUnboundedArray <T extends Object>{
     
     private final static boolean DEBUG = true;
@@ -16,8 +18,8 @@ public class MUnboundedArray <T extends Object>{
         Object unArray = Array.newInstance(String.class, sizes);
     }
 
-    public T get(int index, int subIndex){
-        T output = this.unArray[index][subIndex];
+    public Object get(int index, int subIndex){
+        Object output = this.unArray[index][subIndex];
         return output;   
     }
 
