@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 
 public class MUnboundedArray<T extends Object> {
 
-    private final static boolean DEBUG = true;
+    private final static boolean DEBUG = false;
     private Object[] unArray;
     private int counter = 0;
     private int placeholder = 0;
