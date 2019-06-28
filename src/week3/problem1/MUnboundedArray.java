@@ -2,7 +2,7 @@ package week3.problem1;
 
 import java.lang.reflect.Array;
 
-public class MUnboundedArray<T extends Object> {
+public class MUnboundedArray<E> {
 
     private final static boolean DEBUG = false;
     private Object[] unArray;
@@ -18,7 +18,7 @@ public class MUnboundedArray<T extends Object> {
         return this.unArray[index];
     }
 
-    public void set(int index, Object thing) {
+    public void set(int index, E thing) {
         this.unArray[index] = thing;
     }
 
@@ -59,7 +59,7 @@ public class MUnboundedArray<T extends Object> {
         }
     }
 
-    public void grow(Object thing) {
+    public void grow(E thing) {
         int growCompare = size();
         if (growCompare == unArray.length) {
             reallocate(growCompare * 2);
@@ -76,5 +76,18 @@ public class MUnboundedArray<T extends Object> {
                 reallocate(shrinkCompare / 2);
             }
         }
+    }
+
+    public void add(E something){
+        grow(something);
+    }
+
+    public int indexof(Object something){
+        for (int i = 0; i < size(); i++){
+            if(something.equals(unArray[i])){
+                return i;
+            }
+        }
+        return -1;
     }
 }
