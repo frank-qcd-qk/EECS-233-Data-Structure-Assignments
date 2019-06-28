@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import week3.problem1.*;
 
 public class RandomWriter {
-    private final static boolean DEBUG = true;
+    private final static boolean DEBUG = false;
 
     // ! Initializaion vars
     private int k, length;
@@ -360,13 +360,12 @@ public class RandomWriter {
      */
     public static void main(String args[]) {
         if (DEBUG) {
-            for (int i = 0; i < 1000; i++) {
-                RandomWriter wordGen = new RandomWriter(2, 100,
-                        "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
-                        "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/result.txt");
-                wordGen.sequentialRunner();
-                System.out.println(wordGen.getOPTime());
-            }
+            RandomWriter wordGen = new RandomWriter(6, 100,
+                    "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
+                    "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/result.txt");
+            wordGen.sequentialRunner();
+            System.out.println(wordGen.getOPTime());
+
         } else {
             int userInput_k = 0;
             int userInput_length = 0;
