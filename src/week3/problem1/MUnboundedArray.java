@@ -30,7 +30,7 @@ public class MUnboundedArray <T extends Object>{
             }
         }
         if (DEBUG){
-            System.out.println("Method Size: Index value is " + counter);
+            System.out.println("Method Size: Index value is " + (counter - 1));
         }
         return (counter);
     }

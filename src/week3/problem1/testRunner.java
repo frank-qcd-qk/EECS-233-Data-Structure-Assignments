@@ -6,6 +6,6 @@ public class testRunner{
         test.grow(9);
         test.grow(10);
         test.shrink();
-        System.out.println(test.get(1));
+        System.out.println(test.get(0));
     }
 }
