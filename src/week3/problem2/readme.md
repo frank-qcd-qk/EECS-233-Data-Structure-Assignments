@@ -68,6 +68,8 @@ As far as we observe, with Java Array List implementation and our implementation
 
 **Overall, we observed that with a larger segmentation size, we can achieve more human readable results.**
 
+**In the sense of deep learning, the segmentation size is basically a temporal information that allows us to include more past information with the prediction to make prediction more "right"**
+
 ##### INPUT1:
 
 A man on a tired gray horse reined in where a dim cattle-trail dropped into a gulch, and looked behind him. Nothing was in sight. He half closed his eyes and searched the horizon. No, there was nothing--just the same old sand and sage-brush, hills, more sand and sage-brush, and then to the west and north the spur of the Rockies, whose jagged peaks were white with a fresh fall of snow. The wind was chill. He shivered, and looked to the eastward. For the last few hours he had felt snow in the air, and now he could see it in the dim, gray mist--still far off, but creeping toward him.
