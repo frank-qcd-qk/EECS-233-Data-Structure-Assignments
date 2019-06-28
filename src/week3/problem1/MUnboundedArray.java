@@ -8,7 +8,6 @@ public class MUnboundedArray <T extends Object>{
     private int subArrayPlace = 0;
     private int subsize;
     private T unArray[][];
-    private T tempArray[][];
 
     public MUnboundedArray(int size, int subsize){
         this.size = size;
@@ -63,7 +62,7 @@ public class MUnboundedArray <T extends Object>{
                 }
             }
         }
-         
+
     }
 
 }
