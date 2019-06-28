@@ -100,7 +100,6 @@ public class RandomWriter {
 
             // ! Sgement the characters by index
             boolean successSegment = true;
-            int spaceCount = 0;
             for (int i = 0; i < this.k; i++) {
                 char tempChar = this.sourceText.charAt(sourceTextIndexer + i);
                 // * Avoid any potential issue with special characters in the text.
@@ -108,7 +107,7 @@ public class RandomWriter {
                     segmetation.append(tempChar);
                 } else {
                     // * Space handling
-                    if ((tempChar == ' ') && (Character.isLetter(this.sourceText.charAt(sourceTextIndexer + i + 1)))) {
+                    if ((tempChar == '-')&&(tempChar == ' ') && (Character.isLetter(this.sourceText.charAt(sourceTextIndexer + i + 1)))) {
                         segmetation.append(tempChar);
                     } else if ((tempChar == ' ') && ((this.sourceText.charAt(sourceTextIndexer + i + 1) == ' '))) {
                         // * Treat multiple space as a single space
@@ -132,15 +131,17 @@ public class RandomWriter {
                     probabilityTablePointer = lookupTableIndexer;
                     lookupTableIndexer++;
                     // ! Add probability list
-                    if((sourceText.charAt(sourceTextIndexer + this.k - 1) == ' ')||(Character.isLetter(sourceText.charAt(sourceTextIndexer + this.k - 1)))){
-                        temperary.add(sourceText.charAt(sourceTextIndexer + this.k - 1));
-                        probabilityTable.add(temperary);
-                    }
+                    // if((sourceText.charAt(sourceTextIndexer + this.k - 1) == '
+                    // ')||(Character.isLetter(sourceText.charAt(sourceTextIndexer + this.k - 1)))){
+                    temperary.add(sourceText.charAt(sourceTextIndexer + this.k - 1));
+                    probabilityTable.add(temperary);
+                    // }
                 } else {
                     temperary = probabilityTable.get(probabilityTablePointer);
-                    if((sourceText.charAt(sourceTextIndexer + this.k - 1) == ' ')||(Character.isLetter(sourceText.charAt(sourceTextIndexer + this.k - 1)))){
-                        temperary.add(sourceText.charAt(sourceTextIndexer + this.k - 1));                    
-                    }
+                    // if((sourceText.charAt(sourceTextIndexer + this.k - 1) == '
+                    // ')||(Character.isLetter(sourceText.charAt(sourceTextIndexer + this.k - 1)))){
+                    temperary.add(sourceText.charAt(sourceTextIndexer + this.k - 1));
+                    // }
                 }
 
             }
@@ -182,7 +183,7 @@ public class RandomWriter {
     private String initialSeedGenerator() {
         String initialSeed;
         do {
-            int seedSelector = randomGenerator(this.sourceText.length() - this.k-1);
+            int seedSelector = randomGenerator(this.sourceText.length() - this.k - 1);
             initialSeed = this.sourceText.substring(seedSelector, seedSelector + this.k);
         } while (!initialSeed.matches("^[A-Za-z]+$")); // Regex expression: ^[ A-Za-z]+$ means letters and spaces only
         return initialSeed;
@@ -195,8 +196,8 @@ public class RandomWriter {
 
         // * Generate Initial Seed
         currentSeed = initialSeedGenerator();
-            // * append the seed
-            retTextBuilder.append(currentSeed);
+        // * append the seed
+        retTextBuilder.append(currentSeed);
         if (DEBUG) {
             System.out.println("==========string Generation Report==========");
         }
@@ -207,21 +208,20 @@ public class RandomWriter {
                 System.out.println("Current Seed is: |" + currentSeed + "|");
             }
 
-
             // * Look for next possibility
             lookupIndex = lookupTable.indexOf(currentSeed);
-            if(DEBUG){
+            if (DEBUG) {
                 System.out.println("Seed Index: " + lookupIndex);
             }
             // * handles pair not found issue
             if (((lookupIndex) == -1) || (probabilityTable.get(lookupIndex).size() == 0)) {
-                if(DEBUG){
+                if (DEBUG) {
                     System.out.println("Seed is not a valid seed, retry...");
                 }
                 do {
                     currentSeed = initialSeedGenerator();
-                    if (DEBUG){
-                        System.out.println("New Generated Seed: |"+currentSeed+"|");
+                    if (DEBUG) {
+                        System.out.println("New Generated Seed: |" + currentSeed + "|");
                     }
                     retTextBuilder.append(currentSeed);
                     lookupIndex = lookupTable.indexOf(currentSeed);
@@ -231,20 +231,25 @@ public class RandomWriter {
             // * looks for the possible word choice and add
             int randomSelector = randomGenerator(probabilityTable.get(lookupIndex).size());
             Character nextPossible = probabilityTable.get(lookupIndex).get(randomSelector);
-            if (DEBUG){
-                System.out.println("Picked next possible characer: |" + nextPossible+"|");
+            if (DEBUG) {
+                System.out.println("Picked next possible characer: |" + nextPossible + "|");
             }
             retTextBuilder.append(nextPossible);
 
+            // * Handle convention with comma and periods.
+            if ((!(Character.isLetter(nextPossible))) && nextPossible != ' ') {
+                retTextBuilder.append(' ');
+            }
+
             // * Update the seed
             currentSeed = retTextBuilder.substring(retTextBuilder.length() - this.k, retTextBuilder.length());
-            if(DEBUG){
-                System.out.println("New Seed is: |"+currentSeed+"|");
-                System.out.println("Current Sentence is: |"+retTextBuilder.toString()+"|");
+            if (DEBUG) {
+                System.out.println("New Seed is: |" + currentSeed + "|");
+                System.out.println("Current Sentence is: |" + retTextBuilder.toString() + "|");
                 System.out.println("-----");
             }
         }
-
+        System.out.println("Current Sentence is: |" + retTextBuilder.toString() + "|");
         return retTextBuilder.toString();
     }
 
@@ -260,7 +265,7 @@ public class RandomWriter {
      * an informative error message to System.err and terminate.
      */
     public static void main(String args[]) {
-        RandomWriter wordGen = new RandomWriter(2, 100,
+        RandomWriter wordGen = new RandomWriter(3, 100,
                 "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
                 "result.txt");
         wordGen.sequentialRunner();
