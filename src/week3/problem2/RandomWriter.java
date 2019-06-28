@@ -93,16 +93,22 @@ public class RandomWriter {
 
             // ! Sgement the characters by index
             boolean successSegment = true;
+            int spaceCount = 0;
             for (int i = 0; i < this.k; i++) {
                 char tempChar = sourceText.charAt(sourceTextIndexer + i);
                 if (Character.isLetter(tempChar)) {
                     segmetation.append(tempChar);
                 } else {
-                    successSegment = false;
-                    break;
+                    if ((tempChar==' ')&&(Character.isLetter(sourceText.charAt(sourceTextIndexer + i+1)))){
+                        segmetation.append(tempChar);
+                        spaceCount++;
+                    }else{
+                        successSegment = false;
+                        break;
+                    }
                 }
             }
-            sourceTextIndexer += this.k - 1;
+            sourceTextIndexer ++;
 
             // ! Append to seed lookup table only if it is not a dupe
             if (successSegment) {
@@ -139,7 +145,7 @@ public class RandomWriter {
     // terminate.
 
     public static void main(String args[]) {
-        RandomWriter wordGen = new RandomWriter(2, 3,
+        RandomWriter wordGen = new RandomWriter(3, 3,
                 "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week3/problem2/source.txt",
                 "result.txt");
         wordGen.sequentialRunner();
