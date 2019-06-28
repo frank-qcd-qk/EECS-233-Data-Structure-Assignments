@@ -15,7 +15,7 @@ public class MUnboundedArray <T extends Object>{
         this.size = size;
         this.subsize = subsize;
         int[] sizes = new int[dimensions];
-        Object unArray = Array.newInstance(String.class, sizes);
+        unArray = Array.newInstance(String.class, sizes);
     }
 
     public Object get(int index, int subIndex){
