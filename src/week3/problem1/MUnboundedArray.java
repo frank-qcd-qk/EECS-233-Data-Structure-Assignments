@@ -6,6 +6,7 @@ public class MUnboundedArray <T extends Object>{
     private int size;
     private int subsize;
     private T unArray[][];
+    private T tempArray[][];
 
     public MUnboundedArray(int size, int subsize){
         this.size = size;
@@ -35,7 +36,21 @@ public class MUnboundedArray <T extends Object>{
                 fullInd++;
             }
         }
+        if (DEBUG){
+            System.out.println("Method Size: Index value is " + fullInd + " and subindex value is " + fullSubInd);
+        }
         return (fullInd + fullSubInd);
     }
+
+    public void reallocate(int newSize, int newSubSize){
+        T[][] tempArray = new T[newSize][newSubSize];
+        for (int i = 0; i > unArray.length; i++){
+            for (int j = 0; j > unArray[i].length; j++){
+                tempArray[i][j] = unArray[i][j];
+            }
+        }
+        unArray = tempArray;
+    }
+
 }
 
