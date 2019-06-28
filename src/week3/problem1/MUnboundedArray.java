@@ -7,12 +7,13 @@ public class MUnboundedArray <T extends Object>{
     private int arrayPlace = 0;
     private int subArrayPlace = 0;
     private int subsize;
-    private T unArray[][];
+    private Object unArray;
 
-    public MUnboundedArray(int size, int subsize){
+    public MUnboundedArray(int dimensions, int size, int subsize){
         this.size = size;
         this.subsize = subsize;
-        this.unArray = (T[][]) new Object[size][subsize];
+        int[] sizes = new int[dimensions];
+        Object unArray = Array.newInstance(String.class, sizes);
     }
 
     public T get(int index, int subIndex){
