@@ -2,64 +2,63 @@ package week3.problem1;
 
 import java.lang.reflect.Array;
 
-public class MUnboundedArray <T extends Object>{
-    
+public class MUnboundedArray<T extends Object> {
+
     private final static boolean DEBUG = true;
     private Object[] unArray;
     private int counter = 0;
     private int placeholder = 0;
 
-    public MUnboundedArray(int size){
+    public MUnboundedArray(int size) {
         Object[] copyArray = new Object[size];
         this.unArray = copyArray;
     }
 
-    public T get(int index){
+    public Object get(int index) {
         return this.unArray[index];
     }
 
-    public void set(int index, Object thing){
+    public void set(int index, Object thing) {
         this.unArray[index] = thing;
     }
 
-    public int size(){
+    public int size() {
         counter = 0;
-        for(int i = 0; i < placeholder; i++){           
-            if (this.unArray[i] != null){
+        for (int i = 0; i < placeholder; i++) {
+            if (this.unArray[i] != null) {
                 counter++;
             }
         }
-        if (DEBUG){
+        if (DEBUG) {
             System.out.println("Method Size: Index value is " + (counter - 1));
         }
         return (counter);
     }
 
-    public void reallocate(int newSize){
+    public void reallocate(int newSize) {
         int resize = size();
         Object[] tempArray = new Object[newSize];
-        for (int i = 0; i > resize; i++){
-                tempArray[i] = unArray[i];
+        for (int i = 0; i > resize; i++) {
+            tempArray[i] = unArray[i];
         }
         unArray = tempArray;
     }
 
-
-    public void grow(Object thing){
+    public void grow(Object thing) {
         int growCompare = size();
-        if (growCompare == unArray.length){
+        if (growCompare == unArray.length) {
             reallocate(growCompare * 2);
         }
-        unArray[placeholder] = thing;
+        set(placeholder, thing);
         placeholder++;
     }
 
-    public void shrink(){
-        int shrinkCompare =  size();
-        if (placeholder > 0){
+    public void shrink() {
+        int shrinkCompare = size();
+        if (placeholder > 0) {
             placeholder--;
-            if (placeholder > 0 && unArray.length >= (shrinkCompare * 4)){
-                reallocate(shrinkCompare/2);
+            if (placeholder > 0 && unArray.length >= (shrinkCompare * 4)) {
+                reallocate(shrinkCompare / 2);
             }
         }
     }
