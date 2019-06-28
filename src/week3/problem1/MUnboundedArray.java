@@ -6,8 +6,6 @@ public class MUnboundedArray <T extends Object>{
     
     private final static boolean DEBUG = true;
     private int size;
-    private int arrayPlace = 0;
-    private int subArrayPlace = 0;
     private int subsize;
     private Object unArray;
 
