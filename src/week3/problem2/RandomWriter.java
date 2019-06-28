@@ -13,8 +13,8 @@ public class RandomWriter {
 
     private String sourceText;
 
-    private List<ArrayList<Object>> probabilityTable = new ArrayList<ArrayList<Object>>();
-    private List<String> lookupTable = new ArrayList<String>();
+    private ArrayList<ArrayList<Character>> probabilityTable = new ArrayList<ArrayList<Character>>();
+    private ArrayList<String> lookupTable = new ArrayList<String>();
 
     // ! Performance analyzer
     private long fileReader_start, fileReader_end, fileReader_time;
@@ -33,6 +33,7 @@ public class RandomWriter {
             throw new ExceptionInInitializerError("[Fatal]Constructor Failed to populate key global variables!");
         }
         readFromSource();
+        System.out.println();
         generateProbablisitics();
     }
 
@@ -83,50 +84,68 @@ public class RandomWriter {
     }
 
     private void generateProbablisitics() {
-        int sourceTextIndexer = 0;
-        int lookupTableIndexer = 0;
-        int probabilityTablePointer = 0;
+        int sourceTextIndexer = 0; // Responsible for indexing across the imported string
+        int lookupTableIndexer = 0; // Responsible for telling the system a specific combo's adress in lookup table
+        int probabilityTablePointer = 0; // Respobsible for telling the probability table pointer where to look at
         while ((sourceTextIndexer < (sourceText.length() - this.k))) {
+
             // ! Local Burnable variables
             StringBuilder segmetation = new StringBuilder(this.k);
-            List<Character> temperary = new ArrayList<Character>();
+            ArrayList<Character> temperary = new ArrayList<Character>();
 
             // ! Sgement the characters by index
             boolean successSegment = true;
             int spaceCount = 0;
             for (int i = 0; i < this.k; i++) {
                 char tempChar = sourceText.charAt(sourceTextIndexer + i);
+                // * Avoid any potential issue with special characters in the text.
                 if (Character.isLetter(tempChar)) {
                     segmetation.append(tempChar);
                 } else {
-                    if ((tempChar==' ')&&(Character.isLetter(sourceText.charAt(sourceTextIndexer + i+1)))){
+                    // * Space handling
+                    if ((tempChar == ' ') && (Character.isLetter(sourceText.charAt(sourceTextIndexer + i + 1)))) {
                         segmetation.append(tempChar);
-                        spaceCount++;
-                    }else{
+                    } else if ((tempChar == ' ') && ((sourceText.charAt(sourceTextIndexer + i + 1) == ' '))) {
+                        // * Treat multiple space as a single space
+                        while (sourceText.charAt(sourceTextIndexer + i) == ' ') {
+                            sourceTextIndexer++;
+                        }
+                        segmetation.append(tempChar);
+                    } else {
                         successSegment = false;
                         break;
                     }
                 }
             }
-            sourceTextIndexer ++;
+            sourceTextIndexer++;
 
             // ! Append to seed lookup table only if it is not a dupe
             if (successSegment) {
                 probabilityTablePointer = lookupTable.indexOf(segmetation.toString());
                 if (probabilityTablePointer == -1) {
                     lookupTable.add(segmetation.toString());
-                    lookupTableIndexer++;
                     probabilityTablePointer = lookupTableIndexer;
+                    lookupTableIndexer++;
+                    // ! Add probability list
+                    temperary.add(sourceText.charAt(sourceTextIndexer + this.k-1));
+                    probabilityTable.add(temperary);
+                } else {
+                    temperary = probabilityTable.get(probabilityTablePointer);
+                    temperary.add(sourceText.charAt(sourceTextIndexer + this.k-1));
+
                 }
+
             }
-
-            //! 
-
         }
+
         if (DEBUG) {
             System.out.println("==========GenerateProbablistics Debug 1==========");
             System.out.println("Current Index table looks like: ");
             System.out.println(lookupTable.toString());
+            System.out.println("Current Probability Matrix Looks like: ");
+            for (int i = 0; i < probabilityTable.size(); i++) {
+                System.out.println("Combinataion: |"+lookupTable.get(i)+"| has: "+probabilityTable.get(i).toString());
+            }
             System.out.println("==========GenerateProbablistics Debug 1 END==========");
         }
     }
