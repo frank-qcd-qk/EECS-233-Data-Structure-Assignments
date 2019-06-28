@@ -26,8 +26,8 @@ public class MUnboundedArray <T extends Object>{
     public int size(){
         int fullInd = 0;
         int fullSubInd = 0;
-        for(int i = 0; i < unArray.length; i++){
-            for(int j = 0; j < unArray[i].length; j++){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < subsize; j++){
                 if (this.unArray[i][j] != null){
                     fullSubInd++;
                 }
@@ -44,13 +44,15 @@ public class MUnboundedArray <T extends Object>{
 
     public void reallocate(int newSize, int newSubSize){
         T[][] tempArray = (T[][]) new Object[newSize][newSubSize];
-        for (int i = 0; i > unArray.length; i++){
-            for (int j = 0; j > unArray[i].length; j++){
+        for (int i = 0; i > size; i++){
+            for (int j = 0; j > subsize; j++){
                 tempArray[i][j] = unArray[i][j];
             }
         }
         unArray = tempArray;
     }
+
+
 
 }
 
