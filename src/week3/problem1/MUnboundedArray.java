@@ -36,12 +36,27 @@ public class MUnboundedArray<T extends Object> {
     }
 
     public void reallocate(int newSize) {
-        int resize = size();
+        if (DEBUG){
+            System.out.println("Reallocate: unArray at 0 before method is" + unArray[0]);
+            System.out.println("Reallocate: " + size());
+        }
+        int resize = (placeholder);
         Object[] tempArray = new Object[newSize];
-        for (int i = 0; i > resize; i++) {
+        for (int i = 0; i < resize; i++) {
             tempArray[i] = unArray[i];
+            if(DEBUG){
+                System.out.println("Reallocate Called, resize value is "+ resize);
+
+                System.out.println("Reallocate Called, tempArray at " + i +", value is "+ tempArray[i]);
+                System.out.println("Reallocate Called, unarray in method at " + i +", value is "+ unArray[i]);
+            }
         }
         unArray = tempArray;
+        if (DEBUG){
+            System.out.println("Reallocate Called, newsize value is: " + newSize);
+            System.out.println("Reallocate: unArray at 0 is" + unArray[0]);
+            System.out.println("Reallocate: tempArray at 0 is" + tempArray[0]);
+        }
     }
 
     public void grow(Object thing) {
