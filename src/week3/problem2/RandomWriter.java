@@ -28,14 +28,13 @@ public class RandomWriter {
         initComplete = true;
     }
 
-    public void sequentialRunner(){
-        if (!initComplete){
+    public void sequentialRunner() {
+        if (!initComplete) {
             throw new ExceptionInInitializerError("[Fatal]Constructor Failed to populate key global variables!");
         }
         readFromSource();
         generateProbablisitics();
     }
-
 
     /**
      * readFromSource Method
@@ -83,41 +82,42 @@ public class RandomWriter {
         }
     }
 
-    
     private void generateProbablisitics() {
         int sourceTextIndexer = 0;
         int lookupTableIndexer = 0;
-        int probabilityTablePointer =0;
-        while((sourceTextIndexer<(sourceText.length()-this.k))){
-            //! Local Burnable variables
+        int probabilityTablePointer = 0;
+        while ((sourceTextIndexer < (sourceText.length() - this.k))) {
+            // ! Local Burnable variables
             StringBuilder segmetation = new StringBuilder(this.k);
             List<Character> temperary = new ArrayList<Character>();
 
-
-            //! Sgement the characters by index
+            // ! Sgement the characters by index
             boolean successSegment = true;
-            for (int i = 0; i < this.k;i++){
-                char tempChar = sourceText.charAt(sourceTextIndexer+i);
-                if (Character.isLetter(tempChar)){
+            for (int i = 0; i < this.k; i++) {
+                char tempChar = sourceText.charAt(sourceTextIndexer + i);
+                if (Character.isLetter(tempChar)) {
                     segmetation.append(tempChar);
-                }else{
+                } else {
                     successSegment = false;
                     break;
                 }
             }
-            sourceTextIndexer+= this.k -1;
+            sourceTextIndexer += this.k - 1;
 
-            //! Append to seed lookup table only if it is not a dupe
-            if (successSegment){
-                probabilityTablePointer=lookupTable.indexOf(segmetation.toString());
-                if(probabilityTablePointer==-1){
+            // ! Append to seed lookup table only if it is not a dupe
+            if (successSegment) {
+                probabilityTablePointer = lookupTable.indexOf(segmetation.toString());
+                if (probabilityTablePointer == -1) {
                     lookupTable.add(segmetation.toString());
                     lookupTableIndexer++;
                     probabilityTablePointer = lookupTableIndexer;
                 }
             }
+
+            //! 
+
         }
-        if (DEBUG){
+        if (DEBUG) {
             System.out.println("==========GenerateProbablistics Debug 1==========");
             System.out.println("Current Index table looks like: ");
             System.out.println(lookupTable.toString());
