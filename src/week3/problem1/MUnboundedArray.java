@@ -5,67 +5,63 @@ import java.lang.reflect.Array;
 public class MUnboundedArray <T extends Object>{
     
     private final static boolean DEBUG = true;
-    private int size;
-    private int subsize;
-    private Object unArray;
+    private Object[] unArray;
+    private int counter = 0;
+    private int placeholder = 0;
 
-    public MUnboundedArray(int dimensions, int size, int subsize){
-        this.size = size;
-        this.subsize = subsize;
-        int[] sizes = new int[dimensions];
-        unArray = Array.newInstance(String.class, sizes);
+    public MUnboundedArray(int size){
+        Object[] copyArray = new Object[size];
+        this.unArray = copyArray;
     }
 
-    public Object get(int index, int subIndex){
-        Object output = this.unArray[index][subIndex];
+    public Object get(int index){
+        Object output = this.unArray[index];
         return output;   
     }
 
-    public void set(int index, int subIndex, T thing){
-        this.unArray[index][subIndex] = thing;
+    public void set(int index, Object thing){
+        this.unArray[index] = thing;
     }
 
     public int size(){
-        int fullInd = 0;
-        int fullSubInd = 0;
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < subsize; j++){
-                if (this.unArray[i][j] != null){
-                    fullSubInd++;
-                }
-            }
+        counter = 0;
+        for(int i = 0; i < unArray.length; i++){           
             if (this.unArray[i] != null){
-                fullInd++;
+                counter++;
             }
         }
         if (DEBUG){
-            System.out.println("Method Size: Index value is " + fullInd + " and subindex value is " + fullSubInd);
+            System.out.println("Method Size: Index value is " + counter);
         }
-        return (fullInd + fullSubInd);
+        return (counter);
     }
 
-    public void reallocate(int newSize, int newSubSize){
-        int[] intArray = new int[newSize];
-        Object tempArray = Array.newInstance(String.class, intArray);
-        for (int i = 0; i > size; i++){
-            for (int j = 0; j > subsize; j++){
-                tempArray = unArray;
-            }
+    public void reallocate(int newSize){
+        int resize = size();
+        Object[] tempArray = new Object[newSize];
+        for (int i = 0; i > resize; i++){
+                tempArray[i] = unArray[i];
         }
         unArray = tempArray;
     }
 
-    public void grow(){
-        boolean arrayCheck = true;
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < 1; j++){
-                if (this.unArray[i][j] == null){
-                    arrayCheck = false;
-                }
-            }
-        }
 
+    public void grow(Object thing){
+        int growCompare = size();
+        if (growCompare == unArray.length){
+            reallocate(growCompare * 2);
+        }
+        unArray[placeholder] = thing;
+        placeholder++;
     }
 
+    public void shrink(){
+        int shrinkCompare =  size();
+        if (placeholder > 0){
+            placeholder--;
+            if (placeholder > 0 && unArray.length >= (shrinkCompare * 4)){
+                reallocate(shrinkCompare/2);
+            }
+        }
+    }
 }
-
