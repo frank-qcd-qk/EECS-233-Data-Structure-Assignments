@@ -47,10 +47,11 @@ public class MUnboundedArray <T extends Object>{
     }
 
     public void reallocate(int newSize, int newSubSize){
-        T[][] tempArray = (T[][]) new Object[newSize][newSubSize];
+        int[] intArray = new int[newSize];
+        Object tempArray = Array.newInstance(String.class, intArray);
         for (int i = 0; i > size; i++){
             for (int j = 0; j > subsize; j++){
-                tempArray[i][j] = unArray[i][j];
+                tempArray = unArray;
             }
         }
         unArray = tempArray;
