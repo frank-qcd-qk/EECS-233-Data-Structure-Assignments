@@ -4,11 +4,17 @@ import java.util.Hashtable;
 
 public class sharedHash{
 
-    private int maxSize = 10;
-    Hashtable<Object, Integer> hash = new Hashtable<Object, Integer>(maxSize);
+    private int maximum;
+    private int counter = 0;
+    private int size = 10;
+    Hashtable<Object, Integer> hash = new Hashtable<Object, Integer>(size);
+
+    public sharedHash(int value){
+        maximum = value;
+    }
 
     public int getSize(){
-        return maxSize;
+        return size;
     }
 
     public int getPriority(Integer key){
@@ -18,7 +24,10 @@ public class sharedHash{
     }
 
     public void place(Object insert, Integer key){
-        hash.put(insert, key);
+       if (counter < maximum){
+         hash.put(insert, key);
+         counter++;
+       }
     }
 
 }

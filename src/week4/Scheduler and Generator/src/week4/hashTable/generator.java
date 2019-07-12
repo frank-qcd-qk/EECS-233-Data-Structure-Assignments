@@ -1,5 +1,7 @@
 package week4.hashTable;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -7,8 +9,10 @@ import java.util.Random;
 public class generator implements Runnable {
     private sharedHash dataStructure;
     private int maxResource;
-    private int maxPID = dataStructure.getSize();
+    //private int maxPID = dataStructure.getSize();
     private int currentPID = 1;
+    private int maxRequests;
+    private String filePath;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
@@ -77,9 +81,11 @@ public class generator implements Runnable {
      * @param maximumResource pass in the maximum resource option so that we are
      *                        bounded
      */
-    public generator(sharedHash DataStructure, int maximumResource) {
+    public generator(sharedHash DataStructure, int maximumResource, int maximumRequests, String filePath) {
         this.dataStructure = DataStructure;
         this.maxResource = maximumResource;
+        this.maxRequests = maximumRequests;
+        this.filePath = filePath;
     }
 
     /**
@@ -111,7 +117,7 @@ public class generator implements Runnable {
 
         // ! A local guard for PID resource exaustion
         int[] pidList = new int[totalNum];
-        while (currentPID <= maxPID){
+        //while (currentPID <= maxPID){
             for (int i = 0; i < totalNum; i++) {
                 int temp = getPID();
                 pidList[i] = temp;
@@ -122,7 +128,7 @@ public class generator implements Runnable {
                 }
                 currentPID++;
             }
-        }
+        //}
         // * Uniform time Stamp generation
         LocalDateTime timeStamp = getSystemTime();
 
@@ -171,5 +177,16 @@ public class generator implements Runnable {
             validation = randomGen.nextInt(limitation);
         }
         return validation;
+    }
+
+    private void writeLog(String tobeWritten){
+        try {
+            File writeFile = new File(this.filePath);
+            FileWriter writer = new FileWriter(writeFile,true);
+            writer.write(tobeWritten+System.lineSeparator());
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("[FATAL] Failed to write file!");
+        }
     }
 }
