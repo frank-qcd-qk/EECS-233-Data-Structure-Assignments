@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.linkedList;
 
 public class mainRunner {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class mainRunner {
         // ! Setup shared parameters
         int maxResource = 5;
         int maxDataStore = 100000;
-        int maxProcess = 1000;
+        int maxProcess = 1000000;
         String DataStructureName = "";
         String outputLogName = "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week4/Scheduler and Generator/results/CustomDSlog.txt";
 

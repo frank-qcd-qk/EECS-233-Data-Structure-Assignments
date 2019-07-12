@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.linkedList;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -46,14 +46,14 @@ public class scheduler implements Runnable {
             e.printStackTrace();
         }
         String toWrite = "[Scheduler] Started to process request: PID: " + pid + " RID: " + RID + " Priority: " + PLevel
-                + " OP time: " + SysopTime + " at " + dtf.format(getSystemTime());
+                + " OP time: " + SysopTime + " at " + dtf.format(sysrequesttime);
         // System.out.println(toWrite);
         writeLog(toWrite);
         while (fakeThread.isAlive()) {
             System.out.println("[Scheduler]Waiting for the thread to finish!");
         }
         toWrite = "[Scheduler] Finished to process request: PID: " + pid + " RID: " + RID + " Priority: " + PLevel
-                + " OP time: " + SysopTime + " at " + dtf.format(getSystemTime());
+                + " OP time: " + SysopTime + " at " + dtf.format(sysrequesttime);
         System.out.println(toWrite);
         writeLog(toWrite);
         this.availableReouces.Enqueue(freeResourceID);
@@ -89,14 +89,5 @@ public class scheduler implements Runnable {
         } catch (Exception e) {
             System.out.println("[FATAL] Failed to write file!");
         }
-    }
-    /**
-     * Get the system time
-     * 
-     * @return the system time
-     */
-    private LocalDateTime getSystemTime() {
-        LocalDateTime report = LocalDateTime.now();
-        return report;
     }
 }
