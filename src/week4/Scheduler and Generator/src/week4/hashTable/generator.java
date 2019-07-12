@@ -147,7 +147,7 @@ public class generator implements Runnable {
             String output = "[Generator] Generated request: PID: " + (int) generatedTuple[0] + " RID: " + (int) generatedTuple[1]
             + " Priority: " + (int) generatedTuple[2] + " OP time: " + (int) generatedTuple[3] + " at "
             + dtf.format((LocalDateTime) generatedTuple[4]);
-            System.out.println(output);
+            //System.out.println(output);
             writeLog(output);
         }
     }
@@ -167,7 +167,7 @@ public class generator implements Runnable {
             populator(result);
         }
         */
-        while(this.currentRequests <= this.maxRequests){
+        while(this.currentRequests < this.maxRequests){
             int currentTotalRequest = generateQuant();
             //! Edge case handling where the last generation is larger than the maxRequests, we chose to just full fill all.
             if (this.currentRequests + currentTotalRequest >= this.maxRequests){

@@ -13,7 +13,7 @@ public class mainRunTest {
         // ! Setup shared parameters
         int maxResource = 5;
         int maxDataStore = 100000;
-        int maxProcess = 1000000;
+        int maxProcess = 1000;
         String DataStructureName = "";
         String outputLogName = "‪C:/Users/franc/Desktop/output.txt";
         //String outputLogName = "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week4/Scheduler and Generator/results/CustomDSlog.txt";
