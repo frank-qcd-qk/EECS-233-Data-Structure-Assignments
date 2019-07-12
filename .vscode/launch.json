@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - mainRunner",
+            "request": "launch",
+            "mainClass": "week4.customDataStructure.mainRunner",
+            "projectName": "Scheduler and Generator"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - mainRunTest",
+            "request": "launch",
+            "mainClass": "week4.hashTable.mainRunTest",
+            "projectName": "Scheduler and Generator"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - testRunner",
             "request": "launch",
             "mainClass": "week3.problem1.testRunner"

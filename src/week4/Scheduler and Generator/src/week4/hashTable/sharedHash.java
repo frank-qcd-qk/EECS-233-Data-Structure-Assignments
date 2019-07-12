@@ -4,8 +4,30 @@ import java.util.Hashtable;
 
 public class sharedHash{
 
-    public static void main(String[] args){
-        int size = Integer.parseInt(args[0]);
-        Hashtable<Integer, Integer> sharedHash = new Hashtable<Integer, Integer>(size);
+    private int maximum;
+    private int counter = 0;
+    private int size = 10;
+    Hashtable<Object, Integer> hash = new Hashtable<Object, Integer>(size);
+
+    public sharedHash(int value){
+        maximum = value;
     }
+
+    public int getSize(){
+        return size;
+    }
+
+    public int getPriority(Integer key){
+        Integer map = hash.get(key);
+        int priority = map;
+        return priority;
+    }
+
+    public void place(Object insert, Integer key){
+       if (counter < maximum){
+         hash.put(insert, key);
+         counter++;
+       }
+    }
+
 }
