@@ -22,8 +22,16 @@ public class mainRunner {
         // !Then initialize the shared data structure appropriately and spawn the
         // !Generator and Scheduler threads.
         frankDS sharedDataStructure = new frankDS(maxDataStore);
-
-
+        Runnable generatorRunnable = new generator(DataStructureName);
+        Thread generatorThread = new Thread(generatorRunnable);
+        generatorThread.start();
         
+        try {
+            generatorThread.join();
+        } catch (Exception e) {
+            System.out.println("Generator Thread Failed to join!");
+        }
+
+
     }
 }

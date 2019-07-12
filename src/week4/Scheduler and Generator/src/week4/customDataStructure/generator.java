@@ -21,7 +21,9 @@ public class generator implements Runnable{
 
     }
 
-    private int 
+    public generator(String DataStructure){
+
+    } 
 
 
     public void run(){
