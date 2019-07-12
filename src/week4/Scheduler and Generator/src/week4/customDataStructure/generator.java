@@ -1,5 +1,7 @@
 package week4.customDataStructure;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -11,6 +13,7 @@ public class generator implements Runnable {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private int maxRequests;
     private int currentRequests;
+    private String filePath;
 
     /**
      * The quantity controller The Generator thread will intermittently add 1 to 5
@@ -78,10 +81,11 @@ public class generator implements Runnable {
      * @param maximumResource pass in the maximum resource option so that we are
      *                        bounded
      */
-    public generator(frankDS DataStructure, int maximumResource, int maximumRequests) {
+    public generator(frankDS DataStructure, int maximumResource, int maximumRequests, String filePath) {
         this.dataStructure = DataStructure;
         this.maxResource = maximumResource;
         this.maxRequests = maximumRequests;
+        this.filePath = filePath;
     }
 
     /**
@@ -103,12 +107,14 @@ public class generator implements Runnable {
         returnner[2] = generatePriorityLevel();
         returnner[3] = generateOPtime();
         returnner[4] = timeStamp;
-        System.out.println("[Generator] Generated request: PID: " + (int) returnner[0] + " RID: " + (int) returnner[1]
-                + " Priority: " + (int) returnner[2] + " OP time: " + (int) returnner[3] + " at "
-                + dtf.format((LocalDateTime) returnner[4]));
         return returnner;
     }
 
+    /**
+     * This method is used to make sure batch generation as well as each generated batch has the same system time
+     * @param totalNum
+     * @return
+     */
     private Object[] batchGeneration(int totalNum) {
         Object[] returnner = new Object[totalNum + 1];
 
@@ -132,14 +138,25 @@ public class generator implements Runnable {
         return returnner;
     }
 
+    /**
+     * This is the sepcial and customed to different methods. This is responsible for polutaing the data structure
+     */
     private void populator(Object[] toBeAdded) {
         for (int i = 1; i < toBeAdded.length; i++) {
             Object[] generatedTuple = (Object[]) toBeAdded[i];
             int priority = (int) generatedTuple[2];
             dataStructure.addQueue(priority, generatedTuple);
+            String output = "[Generator] Generated request: PID: " + (int) generatedTuple[0] + " RID: " + (int) generatedTuple[1]
+            + " Priority: " + (int) generatedTuple[2] + " OP time: " + (int) generatedTuple[3] + " at "
+            + dtf.format((LocalDateTime) generatedTuple[4]);
+            System.out.println(output);
+            writeLog(output);
         }
     }
 
+    /**
+     * Runnable function for the thread to run with. Aka the sequencer.
+     */
     public void run() {
 
         while(this.currentRequests <= this.maxRequests){
@@ -165,13 +182,30 @@ public class generator implements Runnable {
                 TimeUnit.MILLISECONDS.sleep(sleepTime);
                 System.out.println("[Generator] Sleep for: "+ sleepTime+" milliseconds");
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
+                System.out.println("System sleep error! No clue how this happened!");
                 e.printStackTrace();
             }
         }
         
     }
+    /**
+     * File writer
+     */
+    private void writeLog(String tobeWritten){
+        try {
+            File writeFile = new File(this.filePath);
+            FileWriter writer = new FileWriter(writeFile,true);
+            writer.write(tobeWritten+System.lineSeparator());
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("[FATAL] Failed to write file!");
+        }
+    }
 
+    /**
+     * Helper function to get the sleep time
+     * @return
+     */
     private Long getSleepTime(){
         return Long.valueOf(randomGenerator(100));
     }

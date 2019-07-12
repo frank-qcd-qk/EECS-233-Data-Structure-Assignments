@@ -15,7 +15,7 @@ public class mainRunner {
         int maxDataStore = 100000;
         int maxProcess = 1000000;
         String DataStructureName = "";
-        String outputLogName = "";
+        String outputLogName = "/home/frank/Desktop/EECS233_WS/2-PS_WS/2019_summer_233_group1/src/week4/Scheduler and Generator/results/CustomDSlog.txt";
 
         // ! Process the user args input
 
@@ -24,7 +24,7 @@ public class mainRunner {
         // !Then initialize the shared data structure appropriately and spawn the
         // !Generator and Scheduler threads.
         frankDS sharedDataStructure = new frankDS(maxDataStore);
-        Runnable generatorRunnable = new generator(sharedDataStructure, maxResource,maxProcess);
+        Runnable generatorRunnable = new generator(sharedDataStructure, maxResource,maxProcess,outputLogName);
         Thread generatorThread = new Thread(generatorRunnable);
         generatorThread.start();
         

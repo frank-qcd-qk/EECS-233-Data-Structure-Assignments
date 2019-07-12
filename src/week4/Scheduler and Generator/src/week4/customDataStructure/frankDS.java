@@ -43,7 +43,12 @@ public class frankDS {
     }
 
     public synchronized Object[] getNextInLine(){
-
+        for (int i = 0; i < 10; i++){
+            Group1_Queue local = (Group1_Queue) this.prioritizedQueue[i];
+            if(local.Peek() != null){
+                
+            }
+        }
     }
 
     public int getCurrentAvailable(){
