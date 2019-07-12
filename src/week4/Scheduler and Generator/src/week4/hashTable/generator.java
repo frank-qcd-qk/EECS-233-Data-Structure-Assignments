@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class generator implements Runnable {
     private sharedHash dataStructure;
@@ -12,6 +13,7 @@ public class generator implements Runnable {
     //private int maxPID = dataStructure.getSize();
     private int currentPID = 1;
     private int maxRequests;
+    private int currentRequests;
     private String filePath;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -118,17 +120,16 @@ public class generator implements Runnable {
         // ! A local guard for PID resource exaustion
         int[] pidList = new int[totalNum];
         //while (currentPID <= maxPID){
-            for (int i = 0; i < totalNum; i++) {
-                int temp = getPID();
-                pidList[i] = temp;
-                if (temp == -1) {
-                    returnner[0] = true;
-                } else {
-                    returnner[0] = false;
-                }
-                currentPID++;
+        for (int i = 0; i < totalNum; i++) {
+            int temp = getPID();
+            pidList[i] = temp;
+            if (temp == -1) {
+                returnner[0] = true;
+            } else {
+                returnner[0] = false;
             }
-        //}
+            currentPID++;
+        }
         // * Uniform time Stamp generation
         LocalDateTime timeStamp = getSystemTime();
 
@@ -143,11 +144,20 @@ public class generator implements Runnable {
             Object[] generatedTuple = (Object[]) toBeAdded[i];
             int priority = (int) generatedTuple[2];
             dataStructure.place(generatedTuple, priority);
+            String output = "[Generator] Generated request: PID: " + (int) generatedTuple[0] + " RID: " + (int) generatedTuple[1]
+            + " Priority: " + (int) generatedTuple[2] + " OP time: " + (int) generatedTuple[3] + " at "
+            + dtf.format((LocalDateTime) generatedTuple[4]);
+            //System.out.println(output);
+            writeLog(output);
         }
     }
 
+    private Long getSleepTime(){
+        return Long.valueOf(randomGenerator(100));
+    }
+
     public void run() {
-        
+        /*
         int currentTotalRequest = generateQuant();
         System.out.println("[Generator] Generated Current batch Quantity is: " + currentTotalRequest);
         Object[] result = batchGeneration(currentTotalRequest);
@@ -155,6 +165,34 @@ public class generator implements Runnable {
             System.out.println("Current PID resource exausted... Waiting!");
         } else {
             populator(result);
+        }
+        */
+        while(this.currentRequests < this.maxRequests){
+            int currentTotalRequest = generateQuant();
+            //! Edge case handling where the last generation is larger than the maxRequests, we chose to just full fill all.
+            if (this.currentRequests + currentTotalRequest >= this.maxRequests){
+                currentTotalRequest = this.maxRequests - this.currentRequests;
+            }
+            System.out.println("=================================================");
+            System.out.println("[Generator] Generated Current batch Quantity is: " + currentTotalRequest);
+            Object[] result = batchGeneration(currentTotalRequest);
+            if ((boolean) result[0] == true || dataStructure.getCurrentAvailable()<=0) {
+                System.out.println("Current PID resource exausted... Waiting!");
+                System.out.println("Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
+            } else {
+                populator(result);
+                this.currentRequests += currentTotalRequest;
+                System.out.println("Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
+            }
+    
+            try {
+                long sleepTime = getSleepTime();
+                TimeUnit.MILLISECONDS.sleep(sleepTime);
+                System.out.println("[Generator] Sleep for: "+ sleepTime+" milliseconds");
+            } catch (InterruptedException e) {
+                System.out.println("System sleep error! No clue how this happened!");
+                e.printStackTrace();
+            }
         }
     }
 

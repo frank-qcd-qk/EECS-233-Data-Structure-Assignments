@@ -13,8 +13,16 @@ public class sharedHash{
         maximum = value;
     }
 
+    public int getMax(){
+        return maximum;
+    }
+
     public int getSize(){
         return size;
+    }
+
+    public int getCurrentAvailable(){
+        return maximum - counter;
     }
 
     public int getPriority(Integer key){
@@ -24,10 +32,10 @@ public class sharedHash{
     }
 
     public void place(Object insert, Integer key){
-       if (counter < maximum){
+      // if (counter < maximum){
          hash.put(insert, key);
          counter++;
-       }
+      // }
     }
 
 }
