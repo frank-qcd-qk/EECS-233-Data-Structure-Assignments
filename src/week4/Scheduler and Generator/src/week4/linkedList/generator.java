@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.linkedList;
 
 import java.io.File;
 import java.io.FileWriter;
