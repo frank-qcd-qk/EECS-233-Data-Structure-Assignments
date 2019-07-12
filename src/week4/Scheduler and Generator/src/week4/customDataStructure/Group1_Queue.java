@@ -52,7 +52,7 @@ public class Group1_Queue<T> {
 
     public Object Peek() {
         if (Empty()) {
-            throw new IllegalAccessError("[Fatal Error!]The current queue is empty!");
+            return null;
         } else {
             Object returnner = this.queue[this.head];
             if(DEBUG){
