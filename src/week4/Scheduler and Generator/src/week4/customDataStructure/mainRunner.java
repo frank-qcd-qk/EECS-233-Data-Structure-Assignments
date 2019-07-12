@@ -11,7 +11,7 @@ public class mainRunner {
          * the shared data structure and (v) the name of an output file.
          */
         // ! Setup shared parameters
-        int resourcePool = -1;
+        int maxResource = -1;
         int maxDataStore = -1;
         int maxProcess = -1;
         String DataStructureName = "";
@@ -19,10 +19,12 @@ public class mainRunner {
 
         // ! Process the user args input
 
+
+
         // !Then initialize the shared data structure appropriately and spawn the
         // !Generator and Scheduler threads.
         frankDS sharedDataStructure = new frankDS(maxDataStore);
-        Runnable generatorRunnable = new generator(DataStructureName);
+        Runnable generatorRunnable = new generator(sharedDataStructure, maxResource);
         Thread generatorThread = new Thread(generatorRunnable);
         generatorThread.start();
         

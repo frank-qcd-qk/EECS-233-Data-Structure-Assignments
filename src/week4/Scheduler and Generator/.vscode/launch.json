@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - mainRunner",
+            "request": "launch",
+            "mainClass": "week4.customDataStructure.mainRunner",
+            "projectName": "Scheduler and Generator"
+        }
+    ]
+}
