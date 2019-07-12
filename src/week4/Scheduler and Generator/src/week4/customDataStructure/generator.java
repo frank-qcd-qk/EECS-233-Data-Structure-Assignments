@@ -1,6 +1,5 @@
 package week4.customDataStructure;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -8,7 +7,7 @@ import java.util.Random;
 public class generator implements Runnable {
     private frankDS dataStructure;
     private int maxResource;
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * The quantity controller The Generator thread will intermittently add 1 to 5
@@ -86,7 +85,8 @@ public class generator implements Runnable {
      * process_id 5, which has priority 10, is requesting access to resource 2 for
      * 10 milliseconds, and this request was submitted at system time 12345.
      * 
-     * Note that all requests submitted by the Generator in a single batch should have the same insertion_time.
+     * Note that all requests submitted by the Generator in a single batch should
+     * have the same insertion_time.
      * 
      * @param pid       // The validated PID input
      * @param timeStamp // The uniform batch System Timestamp
@@ -99,6 +99,8 @@ public class generator implements Runnable {
         returnner[2] = generatePriorityLevel();
         returnner[3] = generateOPtime();
         returnner[4] = timeStamp;
+        System.out.println("[Generator] Generated request: PID: " + (int) returnner[0] + " RID: " + (int) returnner[1] + " Priority: " + (int) returnner[2]
+                + " OP time: " + (int) returnner[3] + " at " + dtf.format((LocalDateTime) returnner[4]));
         return returnner;
     }
 
@@ -113,7 +115,7 @@ public class generator implements Runnable {
             if (temp == -1) {
                 returnner[0] = true;
             } else {
-                returnner[1] = false;
+                returnner[0] = false;
             }
         }
         // * Uniform time Stamp generation
@@ -126,7 +128,7 @@ public class generator implements Runnable {
     }
 
     private void populator(Object[] toBeAdded) {
-        for (int i = 1; i<toBeAdded.length;i++){
+        for (int i = 1; i < toBeAdded.length; i++) {
             Object[] generatedTuple = (Object[]) toBeAdded[i];
             int priority = (int) generatedTuple[2];
             dataStructure.addQueue(priority, generatedTuple);
@@ -134,7 +136,9 @@ public class generator implements Runnable {
     }
 
     public void run() {
+        
         int currentTotalRequest = generateQuant();
+        System.out.println("[Generator] Generated Current batch Quantity is: " + currentTotalRequest);
         Object[] result = batchGeneration(currentTotalRequest);
         if ((boolean) result[0] == true) {
             System.out.println("Current PID resource exausted... Waiting!");
@@ -153,10 +157,14 @@ public class generator implements Runnable {
      * @since Week1 package
      * @author Chude Qian CXQ41
      * @param limitation
-     * @return int a random integer within the limitation
+     * @return int a random integer within the limitation (Modified to be non zero)
      */
     private int randomGenerator(int limitation) {
         Random randomGen = new Random();
-        return randomGen.nextInt(limitation);
+        int validation = randomGen.nextInt(limitation);
+        while(validation == 0){
+            validation = randomGen.nextInt(limitation);
+        }
+        return validation;
     }
 }

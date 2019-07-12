@@ -55,7 +55,9 @@ public class Group1_Queue<T> {
             throw new IllegalAccessError("[Fatal Error!]The current queue is empty!");
         } else {
             Object returnner = this.queue[this.head];
-            System.out.println("[Queue Debug]Current Value: " + returnner.toString());
+            if(DEBUG){
+                System.out.println("[Queue Debug]Current Value: " + returnner.toString());
+            }
             return returnner;
         }
     }
@@ -71,4 +73,8 @@ public class Group1_Queue<T> {
 
     public Group1_Queue() {
     };
+    public Group1_Queue(int size){
+        init(size);
+        this.length = size;
+    }
 }

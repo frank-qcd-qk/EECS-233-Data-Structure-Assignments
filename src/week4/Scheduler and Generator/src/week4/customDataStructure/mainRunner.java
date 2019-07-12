@@ -11,9 +11,9 @@ public class mainRunner {
          * the shared data structure and (v) the name of an output file.
          */
         // ! Setup shared parameters
-        int maxResource = -1;
-        int maxDataStore = -1;
-        int maxProcess = -1;
+        int maxResource = 5;
+        int maxDataStore = 100000;
+        int maxProcess = 1000000;
         String DataStructureName = "";
         String outputLogName = "";
 
@@ -34,6 +34,6 @@ public class mainRunner {
             System.out.println("Generator Thread Failed to join!");
         }
 
-
+        //sharedDataStructure.debugShowDS();
     }
 }
