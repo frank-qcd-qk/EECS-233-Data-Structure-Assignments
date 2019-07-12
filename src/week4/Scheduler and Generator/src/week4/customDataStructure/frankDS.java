@@ -8,7 +8,8 @@ public class frankDS {
     private Object[] prioritizedQueue = new Object[10]; // The orderized priority Queue
     private Group1_Queue<Integer> pidPool = new Group1_Queue<Integer>();
     private int maxSize;
-    
+    private int currentSize;
+
     public frankDS(int maximumSize) {
         // This populates the PID pool so that we don't need to let the generator to
         // worry which PID ID is in use or not
@@ -18,6 +19,7 @@ public class frankDS {
         }
 
         this.maxSize = maximumSize;
+        this.currentSize = 0;
         // This part
         for (int i = 0; i<10;i++){
             prioritizedQueue[i] = new Group1_Queue<Object>(this.maxSize);
@@ -29,9 +31,23 @@ public class frankDS {
         if (priority>=10){
             throw new ArrayIndexOutOfBoundsException("Priority is out of bound of 10!");
         }
-        priority = priority - 1;
-        Group1_Queue extraction = (Group1_Queue) this.prioritizedQueue[priority];
+
+        if(currentSize>=maxSize){
+            throw new ArrayIndexOutOfBoundsException("Current Data Structure is full!");
+        }
+
+        priority = priority - 1; //Prioirty does not start from 0. Boooooooo!
+        Group1_Queue extraction = (Group1_Queue) this.prioritizedQueue[priority]; // A wired pointer manip
         extraction.Enqueue(interestingQueue);
+        currentSize ++;
+    }
+
+    public synchronized Object[] getNextInLine(){
+
+    }
+
+    public int getCurrentAvailable(){
+        return maxSize - currentSize;
     }
 
     public void debugShowDS(){

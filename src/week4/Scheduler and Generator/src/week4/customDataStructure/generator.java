@@ -3,11 +3,14 @@ package week4.customDataStructure;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class generator implements Runnable {
     private frankDS dataStructure;
     private int maxResource;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private int maxRequests;
+    private int currentRequests;
 
     /**
      * The quantity controller The Generator thread will intermittently add 1 to 5
@@ -75,9 +78,10 @@ public class generator implements Runnable {
      * @param maximumResource pass in the maximum resource option so that we are
      *                        bounded
      */
-    public generator(frankDS DataStructure, int maximumResource) {
+    public generator(frankDS DataStructure, int maximumResource, int maximumRequests) {
         this.dataStructure = DataStructure;
         this.maxResource = maximumResource;
+        this.maxRequests = maximumRequests;
     }
 
     /**
@@ -99,8 +103,9 @@ public class generator implements Runnable {
         returnner[2] = generatePriorityLevel();
         returnner[3] = generateOPtime();
         returnner[4] = timeStamp;
-        System.out.println("[Generator] Generated request: PID: " + (int) returnner[0] + " RID: " + (int) returnner[1] + " Priority: " + (int) returnner[2]
-                + " OP time: " + (int) returnner[3] + " at " + dtf.format((LocalDateTime) returnner[4]));
+        System.out.println("[Generator] Generated request: PID: " + (int) returnner[0] + " RID: " + (int) returnner[1]
+                + " Priority: " + (int) returnner[2] + " OP time: " + (int) returnner[3] + " at "
+                + dtf.format((LocalDateTime) returnner[4]));
         return returnner;
     }
 
@@ -136,15 +141,39 @@ public class generator implements Runnable {
     }
 
     public void run() {
-        
-        int currentTotalRequest = generateQuant();
-        System.out.println("[Generator] Generated Current batch Quantity is: " + currentTotalRequest);
-        Object[] result = batchGeneration(currentTotalRequest);
-        if ((boolean) result[0] == true) {
-            System.out.println("Current PID resource exausted... Waiting!");
-        } else {
-            populator(result);
+
+        while(this.currentRequests <= this.maxRequests){
+            int currentTotalRequest = generateQuant();
+            //! Edge case handling where the last generation is larger than the maxRequests, we chose to just full fill all.
+            if (this.currentRequests + currentTotalRequest >= this.maxRequests){
+                currentTotalRequest = this.maxRequests - this.currentRequests;
+            }
+            System.out.println("=================================================");
+            System.out.println("[Generator] Generated Current batch Quantity is: " + currentTotalRequest);
+            Object[] result = batchGeneration(currentTotalRequest);
+            if ((boolean) result[0] == true || dataStructure.getCurrentAvailable()<=0) {
+                System.out.println("Current PID resource exausted... Waiting!");
+                System.out.println("Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
+            } else {
+                populator(result);
+                this.currentRequests += currentTotalRequest;
+                System.out.println("Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
+            }
+    
+            try {
+                long sleepTime = getSleepTime();
+                TimeUnit.MILLISECONDS.sleep(sleepTime);
+                System.out.println("[Generator] Sleep for: "+ sleepTime+" milliseconds");
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
+        
+    }
+
+    private Long getSleepTime(){
+        return Long.valueOf(randomGenerator(100));
     }
 
     // !++++++++++++++++++++Helper Functions+++++++++++++++++++++

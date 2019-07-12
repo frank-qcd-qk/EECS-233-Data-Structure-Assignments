@@ -24,7 +24,7 @@ public class mainRunner {
         // !Then initialize the shared data structure appropriately and spawn the
         // !Generator and Scheduler threads.
         frankDS sharedDataStructure = new frankDS(maxDataStore);
-        Runnable generatorRunnable = new generator(sharedDataStructure, maxResource);
+        Runnable generatorRunnable = new generator(sharedDataStructure, maxResource,maxProcess);
         Thread generatorThread = new Thread(generatorRunnable);
         generatorThread.start();
         
