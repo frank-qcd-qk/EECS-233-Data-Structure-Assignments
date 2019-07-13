@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.priorityQueue;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
@@ -12,14 +12,14 @@ public class fakeProcess implements Runnable {
         this.PID = PID;
         this.RID = RID;
         this.P_level = P_level;
-        this.time = time/10;
+        this.time = time;
         this.sysrequesttime = requestTime;
         this.logger = logger;
     }
 
     public void run() {
         try {
-            TimeUnit.MILLISECONDS.sleep(Long.valueOf(this.time));
+            TimeUnit.MILLISECONDS.sleep(this.time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

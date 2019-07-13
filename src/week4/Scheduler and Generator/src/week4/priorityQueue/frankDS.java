@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.priorityQueue;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +10,6 @@ public class frankDS {
     private int maxSize;
     private int currentSize;
     private int maxResource;
-    private int processed;
 
     public frankDS(int maximumSize, int maxResource) {
         // This populates the PID pool so that we don't need to let the generator to
@@ -30,8 +29,8 @@ public class frankDS {
         }
     }
 
-    public synchronized void completeOne() {
-        this.currentSize--;
+    public synchronized void completeOne(){
+        this.currentSize --;
     }
 
     public synchronized void addQueue(int priority, Object interestingQueue) {
@@ -47,12 +46,7 @@ public class frankDS {
         Group1_Queue extraction = (Group1_Queue) this.prioritizedQueue[priority]; // A wired pointer manip
         extraction.Enqueue(interestingQueue);
         this.currentSize++;
-        this.processed++;
-        // System.out.println("DS report: Current size is: "+this.currentSize);
-    }
-
-    public synchronized int getProcessed() {
-        return this.processed;
+        //System.out.println("DS report: Current size is: "+this.currentSize);
     }
 
     public synchronized Object[] updateNextInLine(int RID) {
@@ -61,30 +55,30 @@ public class frankDS {
         // specific resource
         boolean found = false;
         int i = 0;
-        while (i < 10 && !found) {
+        while(i < 10 && !found){
 
             Group1_Queue local = (Group1_Queue) this.prioritizedQueue[i];
-            // System.out.println("[DS update Next]Currently looking from Priority "+(i+1));
+            //System.out.println("[DS update Next]Currently looking from Priority "+(i+1));
             Group1_Queue parseThrough = new Group1_Queue<Object>(this.maxSize);
 
             while (local.Peek() != null) {
                 Object[] tempHold = (Object[]) local.Dequeue();
-                // System.out.println("Looking at PID: "+tempHold[0]+"RID: "+tempHold[1]);
+                //System.out.println("Looking at PID: "+tempHold[0]+"RID: "+tempHold[1]);
                 if ((int) tempHold[1] == RID) {
-
-                    // System.out.println("RID Matches! PID: "+tempHold[0]+"RID: "+tempHold[1]);
+                    
+                    //System.out.println("RID Matches! PID: "+tempHold[0]+"RID: "+tempHold[1]);
                     found = true;
 
                     returnner = tempHold; // put this in the next to process
                     pidPool.Enqueue((int) tempHold[0]); // Return the PID value once selected to be next processed
-
-                    while (local.Peek() != null) {
-                        // System.out.println("Parse Through Rest Potential");
+                    
+                    while(local.Peek() != null){
+                        //System.out.println("Parse Through Rest Potential");
                         parseThrough.Enqueue(local.Dequeue());
                     }
 
                 } else {
-                    // System.out.println("RID Not! PID: "+tempHold[0]+" RID: "+tempHold[1]);
+                    //System.out.println("RID Not! PID: "+tempHold[0]+" RID: "+tempHold[1]);
                     parseThrough.Enqueue(tempHold);
                 }
             }
@@ -95,7 +89,7 @@ public class frankDS {
         return returnner;
     }
 
-    public synchronized int getCurrentSize() {
+    public synchronized int getCurrentSize(){
         return this.currentSize;
     }
 
@@ -106,7 +100,7 @@ public class frankDS {
     public void debugShowDS() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         for (int i = 0; i < 10; i++) {
-            // System.out.println("=====Current Priority: " + i + " =====");
+            //System.out.println("=====Current Priority: " + i + " =====");
             Group1_Queue local = (Group1_Queue) this.prioritizedQueue[i];
             try {
                 while (local.Peek() != null) {
@@ -129,20 +123,8 @@ public class frankDS {
      * 
      * @return a validated PID
      */
-    public synchronized int[] getNextAvailablePID(int count) {
-        int[] returnner = new int[count];
-        System.out.println("Current PID Pool size"+pidPool.getSize());
-        if (pidPool.getSize() < count) {
-            for (int i = 0; i < count; i++) {
-                returnner[i] = -1;
-            }
-            return returnner;
-        } else {
-            for (int i = 0; i < count; i++) {
-                returnner[i] = (int) pidPool.Dequeue();
-            }
-            return returnner;
-        }
-        // Return -1 if the list is currently empyt, or return the next available PID
+    public synchronized int getNextAvailablePID() {
+        return ((pidPool.Empty()) ? -1 : (int) pidPool.Dequeue()); // Return -1 if the list is currently empyt, or
+                                                                   // return the next available PID
     }
 }

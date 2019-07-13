@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.priorityQueue;
 
 public class Group1_Queue<T> {
     private static final boolean DEBUG = false;
@@ -60,10 +60,6 @@ public class Group1_Queue<T> {
             }
             return returnner;
         }
-    }
-
-    public int getSize(){
-        return this.elements;
     }
 
     @Override

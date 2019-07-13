@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.priorityQueue;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -67,7 +67,7 @@ public class scheduler implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        while (sharedDataStructuer.getCurrentSize() > 0 || sharedDataStructuer.getProcessed()<=this.totalRequests) {
+        while (sharedDataStructuer.getCurrentSize() > 0) {
             if (this.availableReouces.Peek() != null) {
                 System.out.println("[Scheduler]Currently have "+sharedDataStructuer.getCurrentSize()+" left");
                 spawnNextInLine();

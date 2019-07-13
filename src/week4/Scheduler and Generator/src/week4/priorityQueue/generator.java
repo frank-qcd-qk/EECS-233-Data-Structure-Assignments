@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.priorityQueue;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -33,8 +33,8 @@ public class generator implements Runnable {
      * @return obtained PID from the datastrcture *The returned value can be -1
      *         representing the PID pool is exausted
      */
-    private int[] getPID(int count) {
-        return dataStructure.getNextAvailablePID(count);
+    private int getPID() {
+        return dataStructure.getNextAvailablePID();
     }
 
     /**
@@ -119,18 +119,21 @@ public class generator implements Runnable {
         Object[] returnner = new Object[totalNum + 1];
 
         // ! A local guard for PID resource exaustion
-        int[] temp = getPID(totalNum);
-        if (temp[0]==-1){
-            returnner[0] = true;
-
-        }else{
-            returnner[0] = false;
+        int[] pidList = new int[totalNum];
+        for (int i = 0; i < totalNum; i++) {
+            int temp = getPID();
+            pidList[i] = temp;
+            if (temp == -1) {
+                returnner[0] = true;
+            } else {
+                returnner[0] = false;
+            }
         }
         // * Uniform time Stamp generation
         LocalDateTime timeStamp = getSystemTime();
 
         for (int i = 1; i <= totalNum; i++) {
-            returnner[i] = intermediateGeneration(temp[i-1], timeStamp);
+            returnner[i] = intermediateGeneration(pidList[i - 1], timeStamp);
         }
         return returnner;
     }
