@@ -83,7 +83,9 @@ public class frankDS {
                 clone.add(tempTask);
             } 
         }
-        pidPool.Enqueue(returnner[0]);
+        if(returnner[0]!=null){
+            pidPool.Enqueue(returnner[0]);
+        }
         this.priorityQueueTask.clear();
         this.priorityQueueTask = clone;
         System.out.println("After Op: "+this.priorityQueueTask.size());

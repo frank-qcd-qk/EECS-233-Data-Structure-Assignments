@@ -23,11 +23,11 @@ public class scheduler implements Runnable {
         // ! Delay for 100 ms to make sure the generator is running first
         do {
             spawnNextInLine();
-            System.out.println("Current Size: "+sharedDataStructure.getCurrentSize());
-            System.out.println("Processed Count: " +sharedDataStructure.getProcecssedCount());
+            System.out.println("Current Size: " + sharedDataStructure.getCurrentSize());
+            System.out.println("Processed Count: " + sharedDataStructure.getProcecssedCount());
         } while (sharedDataStructure.getCurrentSize() > 0
-                || sharedDataStructure.getProcecssedCount() <= this.totalRequests);
-                System.out.println("END END END");
+                || sharedDataStructure.getProcecssedCount() < this.totalRequests);
+        System.out.println("END END END");
     }
 
     public void spawnNextInLine() {
@@ -43,10 +43,13 @@ public class scheduler implements Runnable {
             if (freeResourceID == -1) {
                 System.out.println("[Scheduler]All resources are busy!");
             }
-        } while (freeResourceID == -1);
+        } while (freeResourceID == -1 && sharedDataStructure.getCurrentSize() > 0);
         System.out.println("[Scheduler]Resource ID get:" + freeResourceID);
-        if (freeResourceID > this.availableReouces || freeResourceID < 1) {
+        if ((freeResourceID > this.availableReouces || freeResourceID < 1)
+                && sharedDataStructure.getCurrentSize() > 0) {
             throw new IndexOutOfBoundsException("[Fatal]Resource ID invalid!");
+        } else if (sharedDataStructure.getCurrentSize() < 0) {
+            return;
         }
 
         // ! Get the next in line to be processed/roam next resource ID if current
@@ -59,9 +62,12 @@ public class scheduler implements Runnable {
                                                                                    // sure we have at least one resource
                                                                                    // ID that we can chase behind
                 next = sharedDataStructure.updateNextInLine(freeResourceID);
-            } while (next[0] == null);
+            } while (next[0] == null && sharedDataStructure.getCurrentSize() > 0);
         }
-
+        if (next[0] == null) {
+            System.out.println("Process END!");
+            return;
+        }
         // ! Populate information!
         int pid = (int) next[0];
         int RID = (int) next[1];
@@ -77,6 +83,7 @@ public class scheduler implements Runnable {
                 this.logName);
         Thread fakeThread = new Thread(fakeRunnable);
         fakeThread.start();
+        return;
     }
 
     /**

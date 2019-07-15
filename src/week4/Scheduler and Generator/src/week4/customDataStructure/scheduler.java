@@ -24,7 +24,7 @@ public class scheduler implements Runnable {
         do {
             spawnNextInLine();
         } while (sharedDataStructure.getCurrentSize() > 0
-                || sharedDataStructure.getProcecssedCount() <= this.totalRequests);
+                || sharedDataStructure.getProcecssedCount() < this.totalRequests);
     }
 
     public void spawnNextInLine() {
@@ -56,7 +56,11 @@ public class scheduler implements Runnable {
                                                                                    // sure we have at least one resource
                                                                                    // ID that we can chase behind
                 next = sharedDataStructure.updateNextInLine(freeResourceID);
-            } while (next[0] == null);
+            } while (next[0] == null && sharedDataStructure.getCurrentSize() > 0);
+        }
+        if (next[0] == null) {
+            System.out.println("Process END!");
+            return;
         }
 
         // ! Populate information!

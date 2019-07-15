@@ -56,9 +56,12 @@ public class scheduler implements Runnable {
                                                                                    // sure we have at least one resource
                                                                                    // ID that we can chase behind
                 next = sharedDataStructure.updateNextInLine(freeResourceID);
-            } while (next[0] == null);
+            } while ((next[0] == null) && sharedDataStructure.getCurrentSize() > 0);
         }
-
+        if (next[0] == null) {
+            System.out.println("Process END!");
+            return;
+        }
         // ! Populate information!
         int pid = (int) next[0];
         int RID = (int) next[1];
