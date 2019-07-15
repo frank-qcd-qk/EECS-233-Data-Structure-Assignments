@@ -1,4 +1,4 @@
-package week4.customDataStructure;
+package week4.hashTable;
 
 import java.io.File;
 import java.io.FileWriter;
