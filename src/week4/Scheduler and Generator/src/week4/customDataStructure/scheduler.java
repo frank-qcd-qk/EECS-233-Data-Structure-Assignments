@@ -11,7 +11,7 @@ public class scheduler implements Runnable {
     private frankDS sharedDataStructuer;
     private int totalRequests;
     private String logName;
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public scheduler(frankDS sharedDS, int resourceSize, int maxOperation, String logName) {
         this.sharedDataStructuer = sharedDS;
@@ -20,6 +20,24 @@ public class scheduler implements Runnable {
         this.logName = logName;
         for (int i = 1; i <= resourceSize; i++) {
             availableReouces.Enqueue(i);
+        }
+    }
+
+    public void run() {
+        //! Delay for 100 ms to make sure the generator is running first
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        while (sharedDataStructuer.getCurrentSize() > 0 || sharedDataStructuer.getProcessed()<=this.totalRequests) {
+            if (this.availableReouces.Peek() != null) {
+                System.out.println("[Scheduler]Currently have "+sharedDataStructuer.getCurrentSize()+" left");
+                spawnNextInLine();
+            } else {
+                System.out.println("[Scheduler] All Resource Busy!");
+            }
         }
     }
 
@@ -58,23 +76,6 @@ public class scheduler implements Runnable {
         writeLog(toWrite);
         this.availableReouces.Enqueue(freeResourceID);
         sharedDataStructuer.completeOne();
-    }
-
-    public void run() {
-        try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        while (sharedDataStructuer.getCurrentSize() > 0 || sharedDataStructuer.getProcessed()<=this.totalRequests) {
-            if (this.availableReouces.Peek() != null) {
-                System.out.println("[Scheduler]Currently have "+sharedDataStructuer.getCurrentSize()+" left");
-                spawnNextInLine();
-            } else {
-                System.out.println("[Scheduler] All Resource Busy!");
-            }
-        }
     }
 
     /**
