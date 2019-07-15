@@ -7,75 +7,74 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class scheduler implements Runnable {
-    private Group1_Queue availableReouces;
-    private frankDS sharedDataStructuer;
-    private int totalRequests;
+    private frankDS sharedDataStructure;
+    private int totalRequests, availableReouces;
     private String logName;
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public scheduler(frankDS sharedDS, int resourceSize, int maxOperation, String logName) {
-        this.sharedDataStructuer = sharedDS;
-        this.availableReouces = new Group1_Queue<Integer>(resourceSize);
+        this.sharedDataStructure = sharedDS;
         this.totalRequests = maxOperation;
         this.logName = logName;
-        for (int i = 1; i <= resourceSize; i++) {
-            availableReouces.Enqueue(i);
-        }
+        this.availableReouces = resourceSize;
     }
 
     public void run() {
-        //! Delay for 100 ms to make sure the generator is running first
-        try {
-            TimeUnit.MILLISECONDS.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        while (sharedDataStructuer.getCurrentSize() > 0 || sharedDataStructuer.getProcessed()<=this.totalRequests) {
-            if (this.availableReouces.Peek() != null) {
-                System.out.println("[Scheduler]Currently have "+sharedDataStructuer.getCurrentSize()+" left");
-                spawnNextInLine();
-            } else {
-                System.out.println("[Scheduler] All Resource Busy!");
-            }
-        }
+        // ! Delay for 100 ms to make sure the generator is running first
+        do {
+            spawnNextInLine();
+        } while (sharedDataStructure.getCurrentSize() > 0
+                || sharedDataStructure.getProcecssedCount() <= this.totalRequests);
     }
 
     public void spawnNextInLine() {
-        int freeResourceID = (int) this.availableReouces.Dequeue();
-        Object[] next = sharedDataStructuer.updateNextInLine(freeResourceID);
-        while (next[0] == null) {
-            this.availableReouces.Enqueue(freeResourceID);
-            freeResourceID = (int) this.availableReouces.Dequeue();
-            next = sharedDataStructuer.updateNextInLine(freeResourceID);
+        // ! Get an available resource ID wait/repeat if not available
+        int freeResourceID = -1;
+        do {
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            freeResourceID = sharedDataStructure.getNextAvailableResourceID();
+            if (freeResourceID == -1) {
+                System.out.println("[Scheduler]All resources are busy!");
+            }
+        } while (freeResourceID == -1);
+        System.out.println("[Scheduler]Resource ID get:" + freeResourceID);
+        if (freeResourceID > this.availableReouces || freeResourceID < 1) {
+            throw new IndexOutOfBoundsException("[Fatal]Resource ID invalid!");
         }
+
+        // ! Get the next in line to be processed/roam next resource ID if current
+        // resource ID has nothing
+        Object[] next = sharedDataStructure.updateNextInLine(freeResourceID);
+        if (next[0] == null) {
+            do {
+                sharedDataStructure.returnResource(freeResourceID);
+                freeResourceID = sharedDataStructure.getNextAvailableResourceID(); // Since we just returned one, we are
+                                                                                   // sure we have at least one resource
+                                                                                   // ID that we can chase behind
+                next = sharedDataStructure.updateNextInLine(freeResourceID);
+            } while (next[0] == null);
+        }
+
+        // ! Populate information!
         int pid = (int) next[0];
         int RID = (int) next[1];
         int PLevel = (int) next[2];
         int SysopTime = (int) next[3];
         LocalDateTime sysrequesttime = (LocalDateTime) next[4];
 
-        Runnable fakeRunnable = new fakeProcess(pid, RID, PLevel, SysopTime, sysrequesttime, this.logName);
-        Thread fakeThread = new Thread(fakeRunnable);
-        fakeThread.start();
-        try {
-            fakeThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         String toWrite = "[Scheduler] Started to process request: PID: " + pid + " RID: " + RID + " Priority: " + PLevel
                 + " OP time: " + SysopTime + " at " + dtf.format(getSystemTime());
         // System.out.println(toWrite);
         writeLog(toWrite);
-        while (fakeThread.isAlive()) {
-            System.out.println("[Scheduler]Waiting for the thread to finish!");
-        }
-        toWrite = "[Scheduler] Finished to process request: PID: " + pid + " RID: " + RID + " Priority: " + PLevel
-                + " OP time: " + SysopTime + " at " + dtf.format(getSystemTime());
-        System.out.println(toWrite);
-        writeLog(toWrite);
-        this.availableReouces.Enqueue(freeResourceID);
-        sharedDataStructuer.completeOne();
+        Runnable fakeRunnable = new fakeProcess(sharedDataStructure, pid, RID, PLevel, SysopTime, sysrequesttime,
+                this.logName);
+        Thread fakeThread = new Thread(fakeRunnable);
+        fakeThread.start();
     }
 
     /**
@@ -91,6 +90,7 @@ public class scheduler implements Runnable {
             System.out.println("[FATAL] Failed to write file!");
         }
     }
+
     /**
      * Get the system time
      * 

@@ -27,6 +27,7 @@ public class frankDS {
         // easily
         resourcePool.init(maxResource);
         for (int i = 1; i <= maxResource; i++) {
+            System.out.println("ResourcePool Added "+i);
             resourcePool.Enqueue(i);
         }
 
@@ -50,7 +51,7 @@ public class frankDS {
      * @return a resource ID
      */
     public synchronized int getNextAvailableResourceID(){
-        return (resourcePool.Empty()?-1 : (int) resourcePool.Dequeue())
+        return (resourcePool.Empty()?-1 : (int) resourcePool.Dequeue());
     }
 
     /**
@@ -150,7 +151,7 @@ public class frankDS {
      * @param interestingQueue takes in the actual queue.
      */
     public synchronized void addQueue(int priority, Object interestingQueue) {
-        if (priority >= 10) {
+        if (priority > 10) {
             throw new ArrayIndexOutOfBoundsException("Priority is out of bound of 10!");
         }
 
@@ -172,7 +173,7 @@ public class frankDS {
      * 
      * @return processed_count a value that stores how many the system has processed
      */
-    public synchronized int procecssedCount() {
+    public synchronized int getProcecssedCount() {
         return this.procecssedCount;
     }
 
@@ -189,7 +190,7 @@ public class frankDS {
      * @return the avilable space in the system
      */
     public synchronized int getCurrentAvailable() {
-        this.leftOverSpace = this.maxSize - this.currentSize
+        this.leftOverSpace = this.maxSize - this.currentSize;
         return this.leftOverSpace;
     }
 

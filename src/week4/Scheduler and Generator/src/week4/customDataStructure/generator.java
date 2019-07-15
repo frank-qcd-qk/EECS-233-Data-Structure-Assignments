@@ -166,12 +166,12 @@ public class generator implements Runnable {
             System.out.println("[Generator] Generated Current batch Quantity is: " + currentTotalRequest);
             Object[] result = batchGeneration(currentTotalRequest);
             if ((boolean) result[0] == true || dataStructure.getCurrentAvailable()<=0) {
-                System.out.println("Current PID resource exausted... Waiting!");
-                System.out.println("Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
+                System.out.println("[Generator]Current PID resource exausted... Waiting!");
+                System.out.println("[Generator]Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
             } else {
                 populator(result);
                 this.currentRequests += currentTotalRequest;
-                System.out.println("Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
+                System.out.println("[Generator]Need to generate "+(this.maxRequests-this.currentRequests)+" more requests!");
             }
             if(this.maxRequests - this.currentRequests ==0){
                 System.out.println("[Generator] Generation Complete!");
@@ -222,10 +222,11 @@ public class generator implements Runnable {
      * @return int a random integer within the limitation (Modified to be non zero)
      */
     private int randomGenerator(int limitation) {
+        int inclusiveBound = limitation+1;
         Random randomGen = new Random();
-        int validation = randomGen.nextInt(limitation);
+        int validation = randomGen.nextInt(inclusiveBound);
         while(validation == 0){
-            validation = randomGen.nextInt(limitation);
+            validation = randomGen.nextInt(inclusiveBound);
         }
         return validation;
     }
