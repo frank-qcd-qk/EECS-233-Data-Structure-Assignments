@@ -15,6 +15,11 @@ public class frankDS {
     private int leftOverSpace;
 
     public frankDS(int maximumSize, int maxResource) {
+        // ! Set initialization for statistics within the datastructure
+        this.maxSize = maximumSize;
+        this.maxResource = maxResource;
+        this.currentSize = 0;
+        this.procecssedCount = 0;
 
         // ! This populates the PID pool so that we don't need to let the generator to
         // ! worry which PID ID is in use or not
@@ -25,18 +30,11 @@ public class frankDS {
 
         // ! THis populates the resource pool so that the scheduler can grasp the value
         // easily
-        resourcePool.init(maxResource);
-        for (int i = 1; i <= maxResource; i++) {
-            System.out.println("ResourcePool Added "+i);
+        resourcePool.init(this.maxResource);
+        for (int i = 1; i <= this.maxResource; i++) {
+            System.out.println("ResourcePool Added " + i);
             resourcePool.Enqueue(i);
         }
-
-        // ! Set initialization for statistics within the datastructure
-        this.maxSize = maximumSize;
-        this.maxResource = maxResource;
-        this.currentSize = 0;
-        this.procecssedCount = 0;
-
         // ! This partpopulates the priotized queue
         for (int i = 0; i < 10; i++) {
             prioritizedQueue[i] = new Group1_Queue<Object>(this.maxSize);
@@ -78,9 +76,9 @@ public class frankDS {
         int i = 0;
         while (i < 10 && !found) {
 
-            Group1_Queue local = (Group1_Queue) this.prioritizedQueue[i];
+            Group1_Queue<?> local = (Group1_Queue<?>) this.prioritizedQueue[i];
             // System.out.println("[DS update Next]Currently looking from Priority "+(i+1));
-            Group1_Queue parseThrough = new Group1_Queue<Object>(this.maxSize);
+            Group1_Queue<Object> parseThrough = new Group1_Queue<Object>(this.maxSize);
 
             while (local.Peek() != null) {
                 Object[] tempHold = (Object[]) local.Dequeue();
@@ -160,7 +158,7 @@ public class frankDS {
         }
 
         priority = priority - 1; // Prioirty does not start from 0. Boooooooo!
-        Group1_Queue extraction = (Group1_Queue) this.prioritizedQueue[priority]; // A wired pointer manip
+        Group1_Queue<?> extraction = (Group1_Queue<?>) this.prioritizedQueue[priority]; // A wired pointer manip
         extraction.Enqueue(interestingQueue);
         this.currentSize++;
         this.procecssedCount++;
@@ -203,7 +201,7 @@ public class frankDS {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         for (int i = 0; i < 10; i++) {
             // System.out.println("=====Current Priority: " + i + " =====");
-            Group1_Queue local = (Group1_Queue) this.prioritizedQueue[i];
+            Group1_Queue<?> local = (Group1_Queue<?>) this.prioritizedQueue[i];
             try {
                 while (local.Peek() != null) {
                     Object[] queueTuple = (Object[]) local.Dequeue();

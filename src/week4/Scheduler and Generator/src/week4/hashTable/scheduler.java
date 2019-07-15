@@ -34,7 +34,6 @@ public class scheduler implements Runnable {
             try {
                 TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             freeResourceID = sharedDataStructure.getNextAvailableResourceID();

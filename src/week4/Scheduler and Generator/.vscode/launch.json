@@ -4,6 +4,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - mainRunner",
             "request": "launch",
+            "mainClass": "week4.linkedList.mainRunner",
+            "projectName": "Scheduler and Generator"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - mainRunner",
+            "request": "launch",
             "mainClass": "week4.hashTable.mainRunner",
             "projectName": "Scheduler and Generator"
         },

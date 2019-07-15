@@ -1,13 +1,11 @@
 package week4.hashTable;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Hashtable;
 import java.util.Map;
 
 public class frankDS {
 
-    private Map<Integer, Group1_Queue> prioritizedHashtable = new Hashtable<>();
+    private Map<Integer, Group1_Queue<Object>> prioritizedHashtable = new Hashtable<>();
     private Group1_Queue<Integer> pidPool = new Group1_Queue<Integer>();
     private Group1_Queue<Integer> resourcePool = new Group1_Queue<Integer>();
     private int maxSize;
@@ -17,6 +15,11 @@ public class frankDS {
     private int leftOverSpace;
 
     public frankDS(int maximumSize, int maxResource) {
+        // ! Set initialization for statistics within the datastructure
+        this.maxSize = maximumSize;
+        this.maxResource = maxResource;
+        this.currentSize = 0;
+        this.procecssedCount = 0;
 
         // ! This populates the PID pool so that we don't need to let the generator to
         // ! worry which PID ID is in use or not
@@ -27,18 +30,11 @@ public class frankDS {
 
         // ! THis populates the resource pool so that the scheduler can grasp the value
         // easily
-        resourcePool.init(maxResource);
-        for (int i = 1; i <= maxResource; i++) {
+        resourcePool.init(this.maxResource);
+        for (int i = 1; i <= this.maxResource; i++) {
             System.out.println("ResourcePool Added " + i);
             resourcePool.Enqueue(i);
         }
-
-        // ! Set initialization for statistics within the datastructure
-        this.maxSize = maximumSize;
-        this.maxResource = maxResource;
-        this.currentSize = 0;
-        this.procecssedCount = 0;
-
         // ! This partpopulates the priotized queue
         for (int i = 0; i < 10; i++) {
             prioritizedHashtable.put(i, new Group1_Queue<>(this.maxSize));
@@ -82,9 +78,9 @@ public class frankDS {
         int i = 0;
         while (i < 10 && !found) {
 
-            Group1_Queue local = (Group1_Queue) this.prioritizedHashtable.get(i);
+            Group1_Queue<Object> local = (Group1_Queue<Object>) this.prioritizedHashtable.get(i);
             // System.out.println("[DS update Next]Currently looking from Priority "+(i+1));
-            Group1_Queue parseThrough = new Group1_Queue<Object>(this.maxSize);
+            Group1_Queue<Object> parseThrough = new Group1_Queue<Object>(this.maxSize);
 
             while (local.Peek() != null) {
                 Object[] tempHold = (Object[]) local.Dequeue();
@@ -165,7 +161,7 @@ public class frankDS {
         }
 
         priority = priority - 1; // Prioirty does not start from 0. Boooooooo!
-        Group1_Queue extraction = (Group1_Queue) this.prioritizedHashtable.get(priority); // A wired pointer manip
+        Group1_Queue<Object> extraction = (Group1_Queue<Object>) this.prioritizedHashtable.get(priority); // A wired pointer manip
         extraction.Enqueue(interestingQueue);
         this.currentSize++;
         this.procecssedCount++;
