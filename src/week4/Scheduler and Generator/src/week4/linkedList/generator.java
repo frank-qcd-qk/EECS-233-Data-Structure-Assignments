@@ -158,6 +158,18 @@ public class generator implements Runnable {
 
         while(this.currentRequests <= this.maxRequests){
             int currentTotalRequest = generateQuant();
+            do {
+                try {
+                    long sleepTime = getSleepTime();
+                    TimeUnit.MILLISECONDS.sleep(sleepTime);
+                    System.out.println("[Generator] Max Resource Hit!");
+                    System.out.println("[Generator] Sleep for: "+ sleepTime+" milliseconds");
+                } catch (InterruptedException e) {
+                    System.out.println("System sleep error! No clue how this happened!");
+                    e.printStackTrace();
+                }                 
+            } while (dataStructure.getCurrentAvailable()<currentTotalRequest);
+
             //! Edge case handling where the last generation is larger than the maxRequests, we chose to just full fill all.
             if (this.currentRequests + currentTotalRequest >= this.maxRequests){
                 currentTotalRequest = this.maxRequests - this.currentRequests;
